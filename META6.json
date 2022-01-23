@@ -1,0 +1,30 @@
+{
+  "auth": "cpan:WARRINGD",
+  "authors": [
+    "David Warring"
+  ],
+  "build-depends": [
+  ],
+  "depends": [
+    "Method::Also"
+  ],
+  "description": "FontConfig native bindings",
+  "license": "Artistic-2.0",
+  "name": "FontConfig::Native",
+  "perl": "6.d",
+  "provides": {
+    "FontConfig": "lib/FontConfig.rakumod",
+    "FontConfig::Defs": "lib/FontConfig/Defs.rakumod",
+    "FontConfig::Raw": "lib/FontConfig/Raw.rakumod"
+  },
+  "raku": "6",
+  "resources": [
+  ],
+  "source-url": "git://github.com/harfbuzz-raku/FontConfig-raku.git",
+  "tags": [
+    "font"
+  ],
+  "test-depends": [
+  ],
+  "version": "0.0.1"
+}
