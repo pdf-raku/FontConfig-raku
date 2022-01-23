@@ -6,7 +6,6 @@
   "build-depends": [
   ],
   "depends": [
-    "Method::Also"
   ],
   "description": "FontConfig native bindings",
   "license": "Artistic-2.0",
