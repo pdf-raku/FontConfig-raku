@@ -1,0 +1,45 @@
+name: test
+
+on:
+  push:
+    branches:
+      - '*'
+    tags-ignore:
+      - '*'
+  pull_request:
+
+jobs:
+  raku:
+    strategy:
+      matrix:
+        os:
+          - ubuntu-latest
+          - macOS-latest
+          #- windows-latest
+        raku-version:
+          - 'latest'
+          - '2020.05.1'
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v2
+      - uses: Raku/setup-raku@v1
+        with:
+          raku-version: ${{ matrix.raku-version }}
+      - name: Install Dependencies
+        run: |
+          # install and test if need be (includes [test-depends])
+          if [ "$RUNNER_OS" == "Linux" ]; then
+              sudo apt-get install -y libfontconfig-dev
+          elif [ "$RUNNER_OS" == "macOS" ]; then
+              brew update
+              brew install fontconfig
+          else
+              echo "$RUNNER_OS not supported"
+              exit 1;
+          fi
+          
+          zef install --/test App::Prove6
+          zef install --deps-only .
+          zef build .
+      - name: Run Tests
+        run: prove6 -I. t
