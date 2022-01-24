@@ -14,7 +14,7 @@ submethod TWEAK(:$configure) {
 
 method parse(Str:D $spec, |c) {
     my FcPattern:D $pattern = FcPattern::parse($spec);
-    self.new: :$pattern |c;
+    self.new: :$pattern, |c;
 }
 
 method configure {
