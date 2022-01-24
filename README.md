@@ -16,4 +16,4 @@ say $fc.format('%{file}');
 
 Description
 ----------
-Just implements the `parse()` and `format()` methods at the moment.
+Bindings to the FontConfig library.
