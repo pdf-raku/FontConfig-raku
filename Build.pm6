@@ -13,6 +13,7 @@ class Build {
         my %vars = LibraryMake::get-vars($destfolder);
         %vars<LIB_BASE> = $libname;
         %vars<LIB_NAME> = ~ $*VM.platform-library-name($libname);
+        %vars<LIBS> = '-lfontconfig';
         mkdir($destfolder);
         LibraryMake::process-makefile($folder, %vars);
         shell(%vars<MAKE>);
