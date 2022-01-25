@@ -9,8 +9,15 @@ Synopsis
 use FontConfig;
 
 # %ENV{FONTCONFIG_FILE} = 'my-fonts.conf';
-my FontConfig:D $fc .= parse: 'Arial';
-say $fc.format('%{file}');
+my FontConfig:D $patt .= parse: 'Arial:style<italic>';
+# -- OR --
+$patt .= new: :family<Arial>, :style<italic>;
+$patt<weight> = 500;
+say $patt.Str;
+Arial:style=italic:weight=500
+my FontConfig $match = $patt.match;
+say $match.format('%{file}');
+say $match<file>;
 # e.g. /usr/share/fonts/truetype/liberation/LiberationSans-Regular.ttf
 ```
 

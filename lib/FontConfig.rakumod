@@ -6,12 +6,13 @@ use NativeCall;
 
 our $config = FcConfig::load();
 
-has FcPattern:D $.pattern is required handles<elems format Str>;
+has FcPattern:D $.pattern handles<elems format Str> = FcPattern::create();
 has Bool $!configured;
 has %!store;
 
-submethod TWEAK(:$configure) {
+submethod TWEAK(:$configure, :pattern($), *%props) {
     self.configure if $configure;
+    self{.key} = .value for %props;
 }
 
 method parse(Str:D $spec, |c) {

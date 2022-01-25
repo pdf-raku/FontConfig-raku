@@ -70,6 +70,7 @@ class FcPattern is repr('CPointer') is export {
         has Pointer $!d1;
         has Pointer $!d2;
     }
+    our sub create(--> FcPattern) is native($FC-LIB) is symbol('FcPatternCreate') {...}
     our sub parse(Str --> FcPattern) is native($FC-LIB) is symbol('FcNameParse') {...}
     method substitute() is native($FC-LIB) is symbol('FcDefaultSubstitute') {...};
     method format(Str --> Str) is native($FC-LIB) is symbol('FcPatternFormat') {...};

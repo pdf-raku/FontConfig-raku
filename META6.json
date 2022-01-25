@@ -6,6 +6,7 @@
   "build-depends": [
   ],
   "depends": [
+      "LibraryMake"
   ],
   "description": "FontConfig native bindings",
   "license": "Artistic-2.0",
