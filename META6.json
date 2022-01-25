@@ -18,6 +18,7 @@
   },
   "raku": "6",
   "resources": [
+      "libraries/fc_raku"
   ],
   "source-url": "git://github.com/harfbuzz-raku/FontConfig-raku.git",
   "tags": [

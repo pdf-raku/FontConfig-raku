@@ -40,7 +40,19 @@ method clone(|c) {
     self.new: :$pattern, |c;
 }
 
-method Hash handles<keys values pairs> {
+method ASSIGN-KEY(Str() $key, FcValue() $val) {
+    %!store{$key} = $val() if %!store;
+    $!pattern.add($key, $val, False); 
+}
+
+method DELETE-KEY(Str:D $key) {
+    self.Hash unless %!store;
+    my $v := %!store{$key}:delete;
+    $!pattern.del($key);
+    $v;
+}
+
+method Hash handles<keys values pairs AT-KEY EXISTS-KEY>{
     unless %!store {
         my FcValue $value .= new;
         my FcPattern::Iter $iter .= new;

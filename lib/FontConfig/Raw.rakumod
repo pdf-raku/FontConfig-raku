@@ -1,7 +1,7 @@
 #| Native FontConfig Raku bindings
 unit module FontConfig::Raw;
 
-use FontConfig::Defs :$FC-LIB, :$types, :enums;
+use FontConfig::Defs :$FC-LIB, :$FC-BIND-LIB, :$types, :enums;
 use NativeCall;
 
 class FcMatrix  is repr('CPointer') {}
@@ -10,10 +10,11 @@ class FcLangSet is repr('CPointer') {}
 class FcRange   is repr('CPointer') {}
 class FcBinding is repr('CPointer') {}
 
-class FcValue is repr('CStruct') is export {
+class FcValue is repr('CStruct') is export is rw {
     has int32 $.type;
     class U is repr('CUnion') is rw {
-	has Str       $.s;
+	has Str       $!s;
+        method s { $!s }
         has int32     $.i;
         has FcBool    $.b;
         has num64     $.d;
@@ -22,6 +23,10 @@ class FcValue is repr('CStruct') is export {
         has Pointer   $.f;
         has FcLangSet $.l;
         has FcRange   $.r;
+
+        submethod TWEAK(Str :$s) {
+            $!s := $s if $s.defined;
+        }
 
         method get($_) {
             when FcTypeUnknown { Mu }
@@ -39,15 +44,15 @@ class FcValue is repr('CStruct') is export {
         }
     };
     HAS U $.u;
-    multi method store(Str  $_,    :$!type = FcTypeString)  { $!u.s = $_ }
+    multi method store(Str  $s,    :$!type = FcTypeString)  { $!u.TWEAK(:$s) }
     multi method store(Bool $_,    :$!type = FcTypeBool)    { $!u.b = $_ }
     multi method store(Int  $_,    :$!type = FcTypeInteger) { $!u.i = $_ }
     multi method store(Numeric $_, :$!type = FcTypeDouble)  { $!u.d = $_ }
     multi method store($_) { fail "don't know how to set FcValue to {.WHAT.raku}"; }
     multi method COERCE($v) {
         my $obj = self.new;
-        $obj.u.store($v);
-        $v;
+        $obj.store($v);
+        $obj;
     }
     method CALL-ME is rw {
         Proxy.new(
@@ -69,7 +74,7 @@ class FcPattern is repr('CPointer') is export {
     method substitute() is native($FC-LIB) is symbol('FcDefaultSubstitute') {...};
     method format(Str --> Str) is native($FC-LIB) is symbol('FcPatternFormat') {...};
     method Str(--> Str) is native($FC-LIB) is symbol('FcNameUnparse') {...};
-    method add(Str, FcValue --> FcBool) is native($FC-LIB) is symbol('FcPatternAdd') {...};
+    method add(Str, FcValue, FcBool --> FcBool) is native($FC-BIND-LIB) is symbol('fc_raku_pattern_add') {...};
     method get(Str, int32 $n, FcValue $v is rw --> FcBool) is native($FC-LIB) is symbol('FcPatternGet') {...};
     method del(Str --> FcBool) is native($FC-LIB) is symbol('FcPatternDel') {...};
     method elems(--> int32) is native($FC-LIB) is symbol('FcPatternObjectCount') {...};

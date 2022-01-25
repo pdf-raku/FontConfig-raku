@@ -1,6 +1,7 @@
 #| Enums and constants
 unit module FontConfig::Defs;
 our $FC-LIB is export(:FC-LIB) = 'fontconfig';
+our $FC-BIND-LIB is export(:FC-BIND-LIB) = %?RESOURCES<libraries/fc_raku>;
 
 constant FcBool       is export(:types) = int32;
 constant FcObject     is export(:types) = int32;
