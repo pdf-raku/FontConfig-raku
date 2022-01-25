@@ -2,11 +2,13 @@ unit class FontConfig;
 
 use FontConfig::Raw;
 use FontConfig::Defs :enums;
+use NativeCall;
 
 our $config = FcConfig::load();
 
-has FcPattern:D $.pattern is required handles<format Str>;
+has FcPattern:D $.pattern is required handles<elems format Str>;
 has Bool $!configured;
+has %!store;
 
 submethod TWEAK(:$configure) {
     self.configure if $configure;
@@ -21,6 +23,7 @@ method configure {
     $!configured ||= do {
         $config.substitute($!pattern, FcMatchPattern);
         $!pattern.substitute();
+        %!store = ();
         True;
     }
 }
@@ -35,6 +38,32 @@ method match($obj is copy:) {
 method clone(|c) {
     my $pattern = $!pattern.clone();
     self.new: :$pattern, |c;
+}
+
+method Hash handles<keys values pairs> {
+    unless %!store {
+        my FcValue $value .= new;
+        my FcPattern::Iter $iter .= new;
+        $!pattern.iter-start: $iter;
+        my int32 $binding;
+
+        repeat {
+            my $key := $!pattern.iter-key($iter);
+            my $elems := $!pattern.iter-elems($iter);
+            if $elems == 1 {
+                $!pattern.iter-value($iter, 0, $value, $binding);
+                %!store{$key} = $value();
+            }
+            else {
+                my @values = (0 ..^ $elems).map: -> \id {
+                    $!pattern.iter-value($iter, id, $value, $binding);
+                    $value();
+                }
+                %!store{$key} = @values;
+            }
+        } while $!pattern.iter-next: $iter;
+    }
+    %!store;
 }
 
 INIT FontConfig::Raw::init();

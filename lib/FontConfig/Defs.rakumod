@@ -9,6 +9,8 @@ enum FcMatchKind is export(:enums) <FcMatchPattern FcMatchFont FcMatchScan FcMat
 
 enum FcResult is export(:enums) <FcResultMatch FcResultNoMatch FcResultTypeMismatch FcResultNoId FcResultOutOfMemory>;
 
+enum FcValueBinding is export(:enums) <FcValueBindingWeak FcValueBindingStrong FcValueBindingSame>;
+
 enum FC_ELEMENT is export(:enums) (
     :FC_FAMILY<family>,		# String
     :FC_STYLE<style>,		# String

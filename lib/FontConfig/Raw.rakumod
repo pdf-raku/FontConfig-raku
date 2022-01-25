@@ -10,10 +10,10 @@ class FcLangSet is repr('CPointer') {}
 class FcRange   is repr('CPointer') {}
 class FcBinding is repr('CPointer') {}
 
-class FcValue is repr('CStruct') {
+class FcValue is repr('CStruct') is export {
     has int32 $.type;
     class U is repr('CUnion') is rw {
-	has str       $.s;
+	has Str       $.s;
         has int32     $.i;
         has FcBool    $.b;
         has num64     $.d;
@@ -29,7 +29,7 @@ class FcValue is repr('CStruct') {
             when FcTypeInteger { $!i }
             when FcTypeDouble  { $!d }
             when FcTypeString  { $!s }
-            when FcTypeBool    { $!b }
+            when FcTypeBool    { ?$!b }
             when FcTypeMatrix  { $!m }
             when FcTypeCharSet { $!c }
             when FcTypeFTFace  { $!f }
@@ -38,7 +38,7 @@ class FcValue is repr('CStruct') {
             default { fail "FcValue has unknown type: $_" }
         }
     };
-    has U $.u;
+    HAS U $.u;
     multi method store(Str  $_,    :$!type = FcTypeString)  { $!u.s = $_ }
     multi method store(Bool $_,    :$!type = FcTypeBool)    { $!u.b = $_ }
     multi method store(Int  $_,    :$!type = FcTypeInteger) { $!u.i = $_ }
@@ -61,7 +61,10 @@ class FcValue is repr('CStruct') {
 
 class FcPattern is repr('CPointer') is export {
 
-    class Iter is repr('CPointer') { }
+    class Iter is repr('CStruct') {
+        has Pointer $!d1;
+        has Pointer $!d2;
+    }
     our sub parse(Str --> FcPattern) is native($FC-LIB) is symbol('FcNameParse') {...}
     method substitute() is native($FC-LIB) is symbol('FcDefaultSubstitute') {...};
     method format(Str --> Str) is native($FC-LIB) is symbol('FcPatternFormat') {...};
@@ -71,13 +74,12 @@ class FcPattern is repr('CPointer') is export {
     method del(Str --> FcBool) is native($FC-LIB) is symbol('FcPatternDel') {...};
     method elems(--> int32) is native($FC-LIB) is symbol('FcPatternObjectCount') {...};
     method clone(--> FcPattern) is native($FC-LIB) is symbol('FcPatternDuplicate') {...};
-    method iter-start(Iter $i is rw) is native($FC-LIB) is symbol('FcPatternIterStart') {...};
-    method iter-next(Iter --> FcBool) is native($FC-LIB) is symbol('FcPatternIterStart') {...};
+    method iter-start(Iter:D $iter) is native($FC-LIB) is symbol('FcPatternIterStart') {...};
+    method iter-next(Iter --> FcBool) is native($FC-LIB) is symbol('FcPatternIterNext') {...};
     method iter-key(Iter --> Str) is native($FC-LIB) is symbol('FcPatternIterGetObject') {...};
     method iter-elems(Iter --> int32) is native($FC-LIB) is symbol('FcPatternIterValueCount') {...};
-    method iter-value(Iter, int32 $n, FcValue $v is rw, FcBinding $b is rw --> int32) is native($FC-LIB) is symbol('FcPatternIterGetValue') {...};
+    method iter-value(Iter, int32 $n, FcValue:D, int32 $b is rw --> int32) is native($FC-LIB) is symbol('FcPatternIterGetValue') {...};
     method iter-del(Iter, int32 $n, --> FcBool) is native($FC-LIB) is symbol('FcPatternRemove') {...};
-
     method TWEAK is native($FC-LIB) is symbol('FcPatternReference') {...};
     method DESTROY is native($FC-LIB) is symbol('FcPatternDestroy') {...};
 }
