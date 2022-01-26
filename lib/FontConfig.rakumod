@@ -41,7 +41,16 @@ method clone(|c) {
     self.new: :$pattern, |c;
 }
 
-method ASSIGN-KEY(Str() $key, FcValue() $val) {
+multi method ASSIGN-KEY(Str() $key, Str:D $sym where FcName::object($key).type == FcTypeInteger|FcTypeBool|FcTypeRange) {
+    # named numeric constant, e.g. 'bold'
+    if FcName::constant($sym, my int32 $val) {
+        self.ASSIGN-KEY($key, $val)
+    }
+    else {
+        fail "unknown named constant '$key'";
+    }
+}
+multi method ASSIGN-KEY(Str() $key, FcValue() $val) {
     %!store{$key} = $val() if %!store;
     $!pattern.add($key, $val, False); 
 }

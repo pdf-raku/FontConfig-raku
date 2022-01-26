@@ -64,6 +64,14 @@ class FcValue is repr('CStruct') is export is rw {
     }
 }
 
+class FcName is repr('CStruct') is export {
+    has Str $.object;
+    has int32 $.type;
+
+    our sub object(Str --> FcName) is native($FC-LIB) is symbol('FcNameGetObjectType') {...}
+    our sub constant(Str, int32 $v is rw --> FcBool) is native($FC-LIB) is symbol('FcNameConstant') {...}
+}
+
 class FcPattern is repr('CPointer') is export {
 
     class Iter is repr('CStruct') {
