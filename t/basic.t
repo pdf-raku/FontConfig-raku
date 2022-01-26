@@ -9,9 +9,13 @@ is-deeply $fc.keys.sort, ("family", "style");
 is $fc<family>, 'Arial';
 $fc<weight> = 'bold';
 is-deeply $fc<weight>, 200;
+$fc<weight> = 200..210;
+is-deeply $fc<weight>, 200..210;
+
+say $fc.Str;
 is-deeply $fc.keys.sort, ("family", "style", "weight");
 is $fc<style>, 'italic';
-is $fc.Str, 'Arial:style=italic:weight=200';
+is $fc.Str, 'Arial:style=italic:weight=[200 210]';
 $fc<weight>:delete;
 is $fc.Str, 'Arial:style=italic';
 is-deeply $fc.keys.sort, ("family", "style");

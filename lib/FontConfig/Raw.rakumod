@@ -7,14 +7,25 @@ use NativeCall;
 class FcMatrix  is repr('CPointer') {}
 class FcCharSet is repr('CPointer') {}
 class FcLangSet is repr('CPointer') {}
-class FcRange   is repr('CPointer') {}
+class FcRange   is repr('CPointer') {
+    our sub create-double(num64, num64 --> FcRange) is native($FC-LIB) is symbol('FcRangeCreateDouble') {...}
+    our sub create-integer(int32, int32 --> FcRange) is native($FC-LIB) is symbol('FcRangeCreateInteger') {...}
+    method get-double(num64 $min is rw, num64 $max is rw) is native($FC-LIB) is symbol('FcRangeGetDouble') {...}
+    method clone( --> FcRange) is native($FC-LIB) is symbol('FcRangeCopy') {...}
+    method destroy is native($FC-LIB) is symbol('FcRangeDestroy') {...}
+    multi method COERCE(Range $_ is raw) {
+        .min =~= .min.round && .max =~= .max.round
+            ?? create-integer(.min.round, .max.round)
+            !! create-double(.min, .max);
+    }
+}
 class FcBinding is repr('CPointer') {}
 
 class FcValue is repr('CStruct') is export is rw {
     has int32 $.type;
     class U is repr('CUnion') is rw {
 	has Str       $!s;
-        method s { $!s }
+        method    s { $!s }
         has int32     $.i;
         has FcBool    $.b;
         has num64     $.d;
@@ -22,11 +33,11 @@ class FcValue is repr('CStruct') is export is rw {
         has FcCharSet $.c;
         has Pointer   $.f;
         has FcLangSet $.l;
-        has FcRange   $.r;
+        has FcRange   $!r;
+        method    r { $!r }
 
-        submethod TWEAK(Str :$s) {
-            $!s := $s if $s.defined;
-        }
+        multi submethod TWEAK(Str:D :$s!) { $!s := $s }
+        multi submethod TWEAK(FcRange:D :$r!) { $!r := $r }
 
         method get($_) {
             when FcTypeUnknown { Mu }
@@ -39,7 +50,12 @@ class FcValue is repr('CStruct') is export is rw {
             when FcTypeCharSet { $!c }
             when FcTypeFTFace  { $!f }
             when FcTypeLangSet { $!l }
-            when FcTypeRange   { $!m }
+            when FcTypeRange   {
+                $!r.get-double(my num64 $min, my num64 $max);
+                $min =~= $min.Int && $max =~= $max.Int
+                    ?? $min.Int .. $max.Int
+                    !! $min .. $max;
+            }
             default { fail "FcValue has unknown type: $_" }
         }
     };
@@ -48,6 +64,10 @@ class FcValue is repr('CStruct') is export is rw {
     multi method store(Bool $_,    :$!type = FcTypeBool)    { $!u.b = $_ }
     multi method store(Int  $_,    :$!type = FcTypeInteger) { $!u.i = $_ }
     multi method store(Numeric $_, :$!type = FcTypeDouble)  { $!u.d = $_ }
+    multi method store(Range $_ is raw, :$!type = FcTypeRange)  {
+        my FcRange() $r = $_;
+        $!u.TWEAK(:$r);
+    }
     multi method store($_) { fail "don't know how to set FcValue to {.WHAT.raku}"; }
     multi method COERCE($v) {
         my $obj = self.new;

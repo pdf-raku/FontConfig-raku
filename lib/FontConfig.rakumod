@@ -52,6 +52,7 @@ multi method ASSIGN-KEY(Str() $key, Str:D $sym where FcName::object($key).type =
 }
 multi method ASSIGN-KEY(Str() $key, FcValue() $val) {
     %!store{$key} = $val() if %!store;
+    $!pattern.del($key);
     $!pattern.add($key, $val, False); 
 }
 
