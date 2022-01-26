@@ -41,9 +41,18 @@ method clone(|c) {
     self.new: :$pattern, |c;
 }
 
-multi method ASSIGN-KEY(Str() $key, Str:D $sym where FcName::object($key).type == FcTypeInteger|FcTypeBool|FcTypeRange) {
+method constant(Str $name) {
+    if FcName::constant($name, my int32 $val) {
+        $val
+    }
+    else {
+        fail "unknown '$name' FontConfig constant";
+    }
+}
+
+multi method ASSIGN-KEY(Str() $key, Str:D $name where FcName::object($key).type == FcTypeInteger|FcTypeBool|FcTypeRange) {
     # named numeric constant, e.g. 'bold'
-    if FcName::constant($sym, my int32 $val) {
+    if FcName::constant($name, my int32 $val) {
         self.ASSIGN-KEY($key, $val)
     }
     else {
@@ -51,9 +60,12 @@ multi method ASSIGN-KEY(Str() $key, Str:D $sym where FcName::object($key).type =
     }
 }
 multi method ASSIGN-KEY(Str() $key, FcValue() $val) {
-    %!store{$key} = $val() if %!store;
+    my $v := $val();
+    %!store{$key} = $v if %!store;
     $!pattern.del($key);
-    $!pattern.add($key, $val, False); 
+    $!pattern.add($key, $val, False)
+        if $v.defined;
+    $v;
 }
 
 method DELETE-KEY(Str:D $key) {
@@ -87,6 +99,13 @@ method Hash handles<keys values pairs AT-KEY EXISTS-KEY>{
         } while $!pattern.iter-next: $iter;
     }
     %!store;
+}
+
+multi method FALLBACK(FontConfig:D: $prop where FcName::object($prop).type != FcTypeUnknown) is rw {
+    Proxy.new(
+        FETCH => { self.AT-KEY($prop); },
+        STORE => -> $, $v is raw { self.ASSIGN-KEY($prop, $v) }
+    );
 }
 
 INIT FontConfig::Raw::init();
