@@ -1,4 +1,4 @@
-unit class FontConfig;
+unit class FontConfig:ver<0.0.1>;
 
 use FontConfig::Raw;
 use FontConfig::Defs :enums;

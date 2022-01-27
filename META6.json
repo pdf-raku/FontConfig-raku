@@ -1,16 +1,16 @@
 {
-  "auth": "cpan:WARRINGD",
+  "auth": "zef:dwarring",
   "authors": [
     "David Warring"
   ],
   "build-depends": [
   ],
   "depends": [
-      "LibraryMake"
+    "LibraryMake"
   ],
   "description": "FontConfig native bindings",
   "license": "Artistic-2.0",
-  "name": "FontConfig::Native",
+  "name": "FontConfig",
   "perl": "6.d",
   "provides": {
     "FontConfig": "lib/FontConfig.rakumod",
@@ -19,9 +19,9 @@
   },
   "raku": "6",
   "resources": [
-      "libraries/fc_raku"
+    "libraries/fc_raku"
   ],
-  "source-url": "git://github.com/harfbuzz-raku/FontConfig-raku.git",
+  "source-url": "git://github.com/pdf-raku/FontConfig-raku.git",
   "tags": [
     "font"
   ],

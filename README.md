@@ -14,7 +14,7 @@ my FontConfig:D $patt .= parse: 'Arial:style<italic>';
 $patt .= new: :family<Arial>, :style<italic>;
 $patt.weight = 'bold';
 say $patt.Str;
-Arial:style=italic:weight=205
+# Arial:style=italic:weight=205
 my FontConfig $match = $patt.match;
 say $match.format('%{file}');
 say $match.file;
@@ -31,6 +31,7 @@ font to be located.
 
 
 Methods
+-------
 
 ### new
 
