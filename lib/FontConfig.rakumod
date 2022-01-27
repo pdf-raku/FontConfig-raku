@@ -50,6 +50,14 @@ method constant(Str $name) {
     }
 }
 
+multi method ASSIGN-KEY(Str() $key, List $vals) {
+    $!pattern.del($key);
+    for $vals.list -> FcValue() $val {
+        $!pattern.add($key, $val, True);
+    }
+    $vals;
+}
+
 multi method ASSIGN-KEY(Str() $key, Str:D $name where FcName::object($key).type == FcTypeInteger|FcTypeBool|FcTypeRange) {
     # named numeric constant, e.g. 'bold'
     if FcName::constant($name, my int32 $val) {
@@ -59,6 +67,7 @@ multi method ASSIGN-KEY(Str() $key, Str:D $name where FcName::object($key).type 
         fail "unknown named constant '$key'";
     }
 }
+
 multi method ASSIGN-KEY(Str() $key, FcValue() $val) {
     my $v := $val();
     %!store{$key} = $v if %!store;

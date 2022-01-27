@@ -9,15 +9,17 @@ Synopsis
 use FontConfig;
 
 # %ENV{FONTCONFIG_FILE} = 'my-fonts.conf';
-my FontConfig:D $patt .= parse: 'Arial:style<italic>';
+my FontConfig:D $patt .= parse: 'Arial,sans:style<italic>';
 # -- OR --
-$patt .= new: :family<Arial>, :style<italic>;
+$patt .= new: :family<Arial sans>, :style<italic>;
+
 $patt.weight = 'bold';
 say $patt.Str;
 # Arial:style=italic:weight=205
+
 my FontConfig $match = $patt.match;
-say $match.format('%{file}');
 say $match.file;
+say $match.format('%{file}');
 # e.g. /usr/share/fonts/truetype/liberation/LiberationSans-Regular.ttf
 ```
 
@@ -54,6 +56,14 @@ Create a new pattern from a parsed FontConfig pattern.
     $patt<weight>:delete;
 
 This module provides am associative interface to [FontConfig properties](https://www.freedesktop.org/software/fontconfig/fontconfig-user.html).
+
+Numeric values in the pattern may be set to ranges:
+
+    $patt<weight> = 195..205;
+
+Values may also hold a list, such as a list of font families:
+
+    $patt<family> = <Arial sans>;
 
 ### match
 
@@ -96,3 +106,10 @@ The Raku FontConfig bindings provide automatic accessors for known properties
 
     $patt.weight = 'bold';
     say $patt.weight;
+
+## FontConfig Configuration
+
+The environment variable %*ENV<FONTCONFIG_FILE> defines the location of the FontConfig configuration file.
+
+This may need to be set to provide a custom configuration file, or FontConfig is giving an error "Cannot load default config file".
+

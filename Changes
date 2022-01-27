@@ -1,6 +1,7 @@
 Revision history for FontConfig
 
 {{$NEXT}}
+    - Handle lists. e.g. $patt.family = <Arial sans>;
 
 0.0.1  2022-01-27T16:52:44+13:00
     - Initial version
