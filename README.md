@@ -15,7 +15,7 @@ $patt .= new: :family<Arial sans>, :style<italic>;
 
 $patt.weight = 'bold';
 say $patt.Str;
-# Arial:style=italic:weight=205
+# Arial,sans:style=italic:weight=205
 
 my FontConfig $match = $patt.match;
 say $match.file;
@@ -84,21 +84,28 @@ The matched object is populated with the actual font properties. The
 
     method constant(Str $name --> UInt)
 
-These are symbolic constants that can be used for numeric properties.
+Fontconfig has symbolic constants for numeric properties. For example, in the pattern: `Ariel;weight=bold`, `bold`,
+evaluates to 200. The `constant()` method can be used to look-up these constants.
 
-    my \bold = FontConfig.constant("bold");
+    my \bold = FontConfig.constant("bold"); # 200
     if $match<bold> >= bold {
         say "matching font is bold";
     }
 
-Note that symbolic constant lookup is performed if a string is assigned
-to a numeric property. So
+Note that the Raku bindings resolve symbolic constants when a string is assigned
+to a numeric property. So:
 
     $match<weight> = "extrabold";
 
 Is equivalent to:
 
     $match<weight> = FontConfig.constant("extrabold");
+
+### Str
+
+The Str method serializes a pattern to a string representation;
+
+    say $patt.Str; # Arial,sans:style=italic:weight=205
 
 ## Property Accessors
 
@@ -111,5 +118,5 @@ The Raku FontConfig bindings provide automatic accessors for known properties
 
 The environment variable %*ENV<FONTCONFIG_FILE> defines the location of the FontConfig configuration file.
 
-This may need to be set to provide a custom configuration file, or FontConfig is giving an error "Cannot load default config file".
+This may need to be set to provide a custom configuration file, or if FontConfig is giving an error "Cannot load default config file".
 
