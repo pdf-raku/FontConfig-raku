@@ -1,6 +1,8 @@
 Revision history for FontConfig
 
 {{$NEXT}}
+
+0.0.3  2022-02-02T12:10:52+13:00
     - Add query-ft-face() which returns a pattern for an existing FreeType
       font.
 
