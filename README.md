@@ -101,6 +101,28 @@ Is equivalent to:
 
     $match<weight> = FontConfig.constant("extrabold");
 
+### query-ft-face
+
+    method query-ft-face(Pointer() $face, Str() :$file, UInt :$id --> FontConfig)
+
+This method computes a FontConfig pattern based on the attributes of an existing
+FreeType font. It can be used to discover FontConfig attributes for a specific font.
+
+The match() method will find the best font, reachable by FontConfig's configuration,
+that matches the original font, which may or may not be the original font.
+
+**The following example requires installation of the L<Font::FreeType> module.**
+
+    use FontConfig;
+    use Font::FreeType;
+    my $file = "t/fonts/Vera.ttf";
+    my Font::FreeType::Face $face = Font::FreeType.face($file);
+    my FontConfig $patt .= query-ft-face($face, :$file);
+    say $patt.fullname; # Bitstream Vera Sans
+    say $patt.file;     # t/fonts/Vera.ttf
+    say $patt.weight;   # 80
+
+
 ### Str
 
 The Str method serializes a pattern to a string representation;

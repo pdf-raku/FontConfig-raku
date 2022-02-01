@@ -1,6 +1,8 @@
 Revision history for FontConfig
 
 {{$NEXT}}
+    - Add query-ft-face() which returns a pattern for an existing FreeType
+      font.
 
 0.0.2  2022-01-28T11:33:30+13:00
     - Handle lists. e.g. $patt.family = <Arial sans>;

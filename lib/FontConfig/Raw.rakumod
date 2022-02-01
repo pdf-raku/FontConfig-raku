@@ -38,6 +38,7 @@ class FcValue is repr('CStruct') is export is rw {
 
         multi submethod TWEAK(Str:D :$s!) { $!s := $s }
         multi submethod TWEAK(FcRange:D :$r!) { $!r := $r }
+        multi submethod TWEAK(Pointer:D :$f!) { $!f := $f }
 
         method get($_) {
             when FcTypeUnknown { Mu }
@@ -68,6 +69,7 @@ class FcValue is repr('CStruct') is export is rw {
         my FcRange() $r = $_;
         $!u.TWEAK(:$r);
     }
+    multi method store(Pointer $f, :$!type = FcTypeFTFace ) { $!u.TWEAK(:$f) }
     multi method store($_) { fail "don't know how to set FcValue to {.WHAT.raku}"; }
     multi method COERCE($v) {
         my $obj = self.new;
@@ -100,6 +102,7 @@ class FcPattern is repr('CPointer') is export {
     }
     our sub create(--> FcPattern) is native($FC-LIB) is symbol('FcPatternCreate') {...}
     our sub parse(Str --> FcPattern) is native($FC-LIB) is symbol('FcNameParse') {...}
+    our sub query-ft-face(Pointer, Str, uint32, Pointer --> FcPattern) is native($FC-LIB) is symbol('FcFreeTypeQueryFace') {...}
     method substitute() is native($FC-LIB) is symbol('FcDefaultSubstitute') {...};
     method format(Str --> Str) is native($FC-LIB) is symbol('FcPatternFormat') {...};
     method Str(--> Str) is native($FC-LIB) is symbol('FcNameUnparse') {...};

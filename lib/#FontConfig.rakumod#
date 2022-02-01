@@ -20,7 +20,7 @@ method parse(Str:D $spec, |c) {
     self.new: :$pattern, |c;
 }
 
-method query-ft-face(Pointer() $face, Str :$file, Int :$id = 0, |c) {
+method query-ft-face(Pointer() $face, Str() :$file, UInt :$id = 0, |c) {
     my FcPattern:D $pattern = FcPattern::query-ft-face($face, $file, $id, Pointer);
      self.new: :$pattern, |c;
 }
