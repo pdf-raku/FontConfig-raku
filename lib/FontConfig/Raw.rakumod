@@ -131,4 +131,6 @@ class FcConfig is repr('CPointer') is export {
 
 our sub init(--> FcBool) is native($FC-LIB) is symbol('FcInit') {...}
 our sub finish() is native($FC-LIB) is symbol('FcFini') {...}
+our sub version(--> int32) is native($FC-LIB) is symbol('FcGetVersion') {...}
+
 

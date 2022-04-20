@@ -25,6 +25,21 @@ method query-ft-face(Pointer() $face, Str :$file, Int :$id = 0, |c) {
      self.new: :$pattern, |c;
 }
 
+method version {
+    given FontConfig::Raw::version().Str -> $s {
+        # Version of the form Xyyzz
+        my @v; # X, yy, ZZ
+        my $i = $s.chars - 2;
+        my $n = 2;
+        while $i >= 0 {
+            @v.unshift: $s.substr($i, $n);
+            $n = $i > 1 ?? 2 !! 1;
+            $i -= $n;
+        }
+        Version.new: @v;
+    }
+}
+
 method configure {
     $!configured ||= do {
         $config.substitute($!pattern, FcMatchPattern);

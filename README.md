@@ -129,6 +129,14 @@ The Str method serializes a pattern to a string representation;
 
     say $patt.Str; # Arial,sans:style=italic:weight=205
 
+### version
+
+    method version returns Version
+
+This method returns the installed fontconfig library version. Please note that
+the minimum supported version is `v2.13.1`.
+
+
 ## Property Accessors
 
 The Raku FontConfig bindings provide automatic accessors for known properties
