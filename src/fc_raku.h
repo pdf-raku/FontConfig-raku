@@ -11,4 +11,6 @@
 
 DLLEXPORT FcBool fc_raku_pattern_add (FcPattern *p, const char *object, FcValue *value, FcBool append);
 
+DLLEXPORT int fc_raku_set_config_file (char* value);
+
 #endif /* __FC_RAKU_H */

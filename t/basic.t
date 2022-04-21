@@ -1,4 +1,5 @@
 use Test;
+plan 25;
 use FontConfig;
 use FontConfig::Raw;
 
@@ -7,13 +8,13 @@ my $LibVersion = FontConfig.version;
 
 note "fontconfig library version: $LibVersion";
 ok $LibVersion >=  $MinVersion, "fontconfig library >= $MinVersion (minimum version)"
-    or diag "** The fontconfig version is too old. This module will not operate normally, or pass tests ***";
+    or diag "** The fontconfig version is too old. This module will not operate normally, o 
+r pass tests ***";
 
 my FcName $weight = FcName::object('weight');
 is $weight.object, 'weight';
 my FontConfig:D $patt .= parse: 'Arial,sans-serif:style=italic';
 ok $patt.pattern.defined;
-note FontConfig.version();
 is $patt.Str, 'Arial,sans:style=italic';
 is $patt.elems, 2;
 is-deeply $patt.keys.sort, ("family", "style");
@@ -37,11 +38,17 @@ nok $patt<file>.defined;
 
 my FontConfig $match;
 lives-ok {$match = $patt.match()};
-ok $match<weight>:exists;
-ok $match<file>:exists;
-ok $match<file>.defined;
-isa-ok $match<file>, Str;
-ok $match.format('%{file}').IO.e, 'matched a file';
+with $match {
+    ok .<weight>:exists;
+    ok .<file>:exists;
+    ok .<file>.defined;
+    ok .file.defined;
+    isa-ok .<file>, Str;
+    ok .format('%{file}').IO.e, 'matched a file';
+}
+else {
+    skip-rest "no matching fonts for: {$patt.Str}";
+}
 
 done-testing;
 

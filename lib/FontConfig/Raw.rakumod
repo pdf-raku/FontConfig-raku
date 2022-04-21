@@ -132,5 +132,4 @@ class FcConfig is repr('CPointer') is export {
 our sub init(--> FcBool) is native($FC-LIB) is symbol('FcInit') {...}
 our sub finish() is native($FC-LIB) is symbol('FcFini') {...}
 our sub version(--> int32) is native($FC-LIB) is symbol('FcGetVersion') {...}
-
-
+our sub set-config-file(Str --> int32) is native($FC-BIND-LIB) is symbol('fc_raku_set_config_file') {...};

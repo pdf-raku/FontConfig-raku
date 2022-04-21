@@ -1,4 +1,5 @@
 FontConfig-raku
+=====
 
 Raku interface to the FontConfig native library
 
@@ -7,9 +8,10 @@ Synopsis
 
 ```raku
 use FontConfig;
+# optional: fontconfig uses the default system configuration, by default 
+INIT FontConfig.set-config-file: 'my-fonts.conf';
 
-# %ENV{FONTCONFIG_FILE} = 'my-fonts.conf';
-my FontConfig:D $patt .= parse: 'Arial,sans:style<italic>';
+my FontConfig $patt .= parse: 'Arial,sans:style<italic>';
 # -- OR --
 $patt .= new: :family<Arial sans>, :style<italic>;
 
@@ -25,9 +27,9 @@ say $match.format('%{file}');
 
 Description
 ----------
-Bindings to the FontConfig library.
+Bindings to the FontConfig library for system-wide font configuration and access.
 
-At this stage, enough of the library is implemented to enable
+At this stage, enough library bindings are implemented to enable
 FontConfig patterns to be parsed or built, and the best matching
 font to be located.
 
@@ -111,7 +113,7 @@ FreeType font. It can be used to discover FontConfig attributes for a specific f
 The match() method will find the best font, reachable by FontConfig's configuration,
 that matches the original font, which may or may not be the original font.
 
-**The following example requires installation of the L<Font::FreeType> module.**
+**The following example requires installation of the `Font::FreeType` module.**
 
     use FontConfig;
     use Font::FreeType;
@@ -146,7 +148,13 @@ The Raku FontConfig bindings provide automatic accessors for known properties
 
 ## FontConfig Configuration
 
-The environment variable %*ENV<FONTCONFIG_FILE> defines the location of the FontConfig configuration file.
+By default, fontconfig follows uses system-wide font configuration files, which
+may depend on your particular system.
 
-This may need to be set to provide a custom configuration file, or if FontConfig is giving an error "Cannot load default config file".
+There are several environment variables that can be set to define files and search paths, including: `FONTCONFIG_FILE`, `FONTCONFIG_PATH`, and `FONTCONFIG_FILE`.
+
+This may need to be set, prior to running your programs, to provide a custom configuration file, or if FontConfig is giving an error "Cannot load default config file".
+
+The FontConfig class has one method `set-config-file($path)` that can be called from the
+current process to set `FONTCONFIG_FILE`. This acts globally and should be called once, before threading.
 

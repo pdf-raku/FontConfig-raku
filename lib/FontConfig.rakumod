@@ -4,7 +4,8 @@ use FontConfig::Raw;
 use FontConfig::Defs :enums;
 use NativeCall;
 
-our $config = FcConfig::load();
+has $!config;
+method !config {  $!config //= FcConfig::load(); }
 
 has FcPattern:D $.pattern handles<elems format Str> = FcPattern::create();
 has Bool $!configured;
@@ -40,9 +41,17 @@ method version {
     }
 }
 
+method set-config-file(IO() $path is copy) {
+    $path .= absolute;
+    given $path.Str {
+        %*ENV<FONTCONFIG_FILE> = $_;
+        FontConfig::Raw::set-config-file($_);
+    }
+}
+
 method configure {
     $!configured ||= do {
-        $config.substitute($!pattern, FcMatchPattern);
+        self!config.substitute($!pattern, FcMatchPattern);
         $!pattern.substitute();
         %!store = ();
         True;
@@ -51,9 +60,12 @@ method configure {
 
 method match($obj is copy:) {
     $obj .= clone: :configure unless $!configured;
-    my FcPattern $pattern = $config.font-match($obj.pattern, my int32 $result);
-    # todo handle $result
-    self.new: :$pattern;
+    with self!config.font-match($obj.pattern, my int32 $result) -> FcPattern $pattern {
+        self.new: :$pattern;
+    }
+    else {
+        self.WHAT;
+    }
 }
 
 method clone(|c) {
@@ -120,7 +132,7 @@ method Hash handles<keys values pairs AT-KEY EXISTS-KEY>{
                 %!store{$key} = $value();
             }
             else {
-                my @values = (0 ..^ $elems).map: -> \id {
+                my @values = (^$elems).map: -> \id {
                     $!pattern.iter-value($iter, id, $value, $binding);
                     $value();
                 }
