@@ -1,6 +1,8 @@
 Revision history for FontConfig
 
 {{$NEXT}}
+
+0.0.4  2022-04-21T14:32:39+12:00
     - Fix testing and handling of zero pattern matches
     - Added FontConfig.set-config-file() configuration  method
 
