@@ -127,7 +127,9 @@ method Hash handles<keys values pairs AT-KEY EXISTS-KEY>{
         repeat {
             my $key := $!pattern.iter-key($iter);
             my $elems := $!pattern.iter-elems($iter);
-            if $elems == 1 {
+            if $elems == 0 {
+            }
+            elsif $elems == 1 {
                 $!pattern.iter-value($iter, 0, $value, $binding);
                 %!store{$key} = $value();
             }

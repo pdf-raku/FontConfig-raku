@@ -3,13 +3,12 @@ plan 25;
 use FontConfig;
 use FontConfig::Raw;
 
-constant $MinVersion = v2.13.1;
+constant $MinVersion = v2.13.01;
 my $LibVersion = FontConfig.version;
 
 note "fontconfig library version: $LibVersion";
 ok $LibVersion >=  $MinVersion, "fontconfig library >= $MinVersion (minimum version)"
-    or diag "** The fontconfig version is too old. This module will not operate normally, o 
-r pass tests ***";
+    or diag "** The fontconfig version ($LibVersion) is < $MinVersion. This module will not operate normally, or pass tests ***";
 
 my FcName $weight = FcName::object('weight');
 is $weight.object, 'weight';
