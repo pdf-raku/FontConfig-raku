@@ -148,13 +148,13 @@ The Raku FontConfig bindings provide automatic accessors for known properties
 
 ## FontConfig Configuration
 
-By default, fontconfig follows uses system-wide font configuration files, which
-may depend on your particular system.
+By default, fontconfig uses system-wide font configuration files> Their
+location may depend on your particular distribution and system.
 
 There are several environment variables that can be set to define files and search paths, including: `FONTCONFIG_FILE`, `FONTCONFIG_PATH`, and `FONTCONFIG_FILE`.
 
 This may need to be set, prior to running your programs, to provide a custom configuration file, or if FontConfig is giving an error "Cannot load default config file".
 
 The FontConfig class has one method `set-config-file($path)` that can be called from the
-current process to set `FONTCONFIG_FILE`. This acts globally and should be called once, before threading.
+current process to set `FONTCONFIG_FILE`. This acts globally and should be called once, before using any other methods.
 
