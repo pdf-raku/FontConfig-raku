@@ -162,6 +162,6 @@ current process to set `FONTCONFIG_FILE`. This acts globally and should be calle
 
 This module requires a development version of fontconfig:
 
-- Debian/Ubuntu Linux: `sudo apt-get install fontconfig-dev`
+- Debian/Ubuntu Linux: `sudo apt-get install libfontconfig1-dev`
 - Alpine/Linux: `doas apk add fontconfig-dev`
 - Mac OS X: `brew install fontconfig`
