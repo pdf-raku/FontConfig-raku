@@ -90,9 +90,8 @@ tasks:
       if test $os = "debian"; then
         sudo apt-get install -y libfontconfig-dev time 
       elif test $os = "ubuntu"; then
-        sudo apt-get install -y libfontconfig-dev time 
+        sudo apt-get install -y libfontconfig-dev time
       elif test $os = "arch"; then
         sudo pacman -S --needed --noconfirm -q fontconfig time
       fi  
       zef install --/test Text::Table::Simple
- 
