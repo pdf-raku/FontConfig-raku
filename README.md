@@ -71,13 +71,13 @@ Values may also hold a list, such as a list of font families:
 
     method match(--> FontConfig)
 
-This method performs FontConfig matching and returns the system
-font that best matches this pattern.
+This method returns a FontConfig object for the system font that best
+matches this pattern.
 
 The matched object is populated with the actual font properties. The
 `file` property contains the path to the font.
 
-    my $match = $pattern.match;
+    my FontConfig $match = $pattern.match;
     say 'matched font: ' ~ $match<fullname>;
     say 'actual weight: ' ~ $match<weight>;
     say 'font file: ' ~ $match<file>;
@@ -158,3 +158,10 @@ This may need to be set, prior to running your programs, to provide a custom con
 The FontConfig class has one method `set-config-file($path)` that can be called from the
 current process to set `FONTCONFIG_FILE`. This acts globally and should be called once, before using any other methods.
 
+## Install
+
+This module requires a development version of fontconfig:
+
+- Debian/Ubuntu Linux: `sudo apt-get install libfontconfig1-dev`
+- Alpine/Linux: `doas apk add fontconfig-dev`
+- Mac OS X: `brew install fontconfig`
