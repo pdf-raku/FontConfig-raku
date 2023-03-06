@@ -148,7 +148,7 @@ The Raku FontConfig bindings provide automatic accessors for known properties
 
 ## FontConfig Configuration
 
-By default, fontconfig uses system-wide font configuration files> Their
+By default, fontconfig uses system-wide font configuration files. Their
 location may depend on your particular distribution and system.
 
 There are several environment variables that can be set to define files and search paths, including: `FONTCONFIG_FILE`, `FONTCONFIG_PATH`, and `FONTCONFIG_FILE`.
