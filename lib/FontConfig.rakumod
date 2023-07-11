@@ -4,8 +4,8 @@ use FontConfig::Raw;
 use FontConfig::Defs :enums;
 use NativeCall;
 
-has $!config;
-method !config {  $!config //= FcConfig::load(); }
+has FcConfig $!config;
+method config { $!config //= FcConfig::load(); }
 
 has FcPattern:D $.pattern handles<elems format Str> = FcPattern::create();
 has Bool $!configured;
@@ -18,6 +18,11 @@ submethod TWEAK(:$configure, :pattern($), *%props) {
 
 method parse(Str:D $spec, |c) {
     my FcPattern:D $pattern = FcPattern::parse($spec);
+    self.new: :$pattern, |c;
+}
+
+method render-prepare(FcPattern $pat, |c) {
+    my FcPattern:D $pattern = self.config.render-prepare($!pattern, $pat);
     self.new: :$pattern, |c;
 }
 
@@ -51,16 +56,16 @@ method set-config-file(IO() $path is copy) {
 
 method configure {
     $!configured ||= do {
-        self!config.substitute($!pattern, FcMatchPattern);
+        self.config.substitute($!pattern, FcMatchPattern);
         $!pattern.substitute();
         %!store = ();
         True;
     }
 }
 
-method match($obj is copy:) {
-    $obj .= clone: :configure unless $!configured;
-    with self!config.font-match($obj.pattern, my int32 $result) -> FcPattern $pattern {
+multi method match(::?CLASS:D $pattern is copy:) {
+    $pattern .= clone: :configure unless $!configured;
+    with self.config.font-match($pattern.pattern, my int32 $result) -> FcPattern $pattern {
         self.new: :$pattern;
     }
     else {

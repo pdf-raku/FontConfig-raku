@@ -4,10 +4,14 @@ unit module FontConfig::Raw;
 use FontConfig::Defs :$FC-LIB, :$FC-BIND-LIB, :$types, :enums;
 use NativeCall;
 
-class FcMatrix  is repr('CPointer') {}
-class FcCharSet is repr('CPointer') {}
-class FcLangSet is repr('CPointer') {}
-class FcRange   is repr('CPointer') {
+class FcMatrix    is repr('CPointer') {}
+class FcCharSet   is repr('CPointer') is export {}
+class FcLangSet   is repr('CPointer') {}
+class FcObjectSet is repr('CPointer') is export {
+    our sub create(--> FcObjectSet) is native($FC-LIB) is symbol('FcObjectSetCreate') {...}
+    method add(Str --> FcBool) is native($FC-LIB) is symbol('FcObjectSetAdd') {...}
+}
+class FcRange     is repr('CPointer') {
     our sub create-double(num64, num64 --> FcRange) is native($FC-LIB) is symbol('FcRangeCreateDouble') {...}
     our sub create-integer(int32, int32 --> FcRange) is native($FC-LIB) is symbol('FcRangeCreateInteger') {...}
     method get-double(num64 $min is rw, num64 $max is rw) is native($FC-LIB) is symbol('FcRangeGetDouble') {...}
@@ -106,6 +110,7 @@ class FcPattern is repr('CPointer') is export {
     method substitute() is native($FC-LIB) is symbol('FcDefaultSubstitute') {...};
     method format(Str --> Str) is native($FC-LIB) is symbol('FcPatternFormat') {...};
     method Str(--> Str) is native($FC-LIB) is symbol('FcNameUnparse') {...};
+    method filter(FcObjectSet $os --> FcPattern) is native($FC-LIB) is symbol('FcPatternFilter') {...}
     method add(Str, FcValue, FcBool --> FcBool) is native($FC-BIND-LIB) is symbol('fc_raku_pattern_add') {...};
     method get(Str, int32 $n, FcValue $v is rw --> FcBool) is native($FC-LIB) is symbol('FcPatternGet') {...};
     method del(Str --> FcBool) is native($FC-LIB) is symbol('FcPatternDel') {...};
@@ -121,10 +126,23 @@ class FcPattern is repr('CPointer') is export {
     method DESTROY is native($FC-LIB) is symbol('FcPatternDestroy') {...};
 }
 
+class FcFontSet is repr('CStruct') is export {
+    has int32 $.nfont;
+    has int32 $.sfont;
+    has CArray[FcPattern] $.fonts;
+
+    our sub create(--> ::?CLASS:D) is native($FC-LIB) is symbol('FcFontSetCreate') {...};
+    method new() { create() }
+    method !destroy is native($FC-LIB) is symbol('FcFontSetDestroy') {...};
+    submethod DESTROY { self!destroy }
+}
+
 class FcConfig is repr('CPointer') is export {
     our sub load(--> FcConfig) is native($FC-LIB) is symbol('FcInitLoadConfigAndFonts') {...}
     method substitute(FcPattern, int32 $kind) is native($FC-LIB) is symbol('FcConfigSubstitute') {...};
     method font-match(FcPattern, int32 $result is rw --> FcPattern) is native($FC-LIB) is symbol('FcFontMatch') {...};
+    method font-sort(FcPattern, FcBool $trim, FcCharSet $csp, int32 $result is rw --> FcFontSet) is native($FC-LIB) is symbol('FcFontSort') {...}
+    method render-prepare(FcPattern $pat, FcPattern $font --> FcPattern) is symbol('FcFontRenderPrepare') is native($FC-LIB) {...};
     method TWEAK is native($FC-LIB) is symbol('FcConfigReference') {...};
     method DESTROY is native($FC-LIB) is symbol('FcConfigDestroy') {...};
 }
