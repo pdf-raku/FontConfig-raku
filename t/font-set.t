@@ -1,5 +1,5 @@
 use Test;
-plan 4;
+plan 6;
 use FontConfig;
 use FontConfig::Raw;
 use FontConfig::Set;
@@ -30,3 +30,16 @@ subtest 'second match', {
         is .<file>.IO.relative, 't/fonts/VeraBd.ttf', 'file';
     }
 }
+
+$set .= match: 'Arial,sans-serif:style=italic', :trim;
+
+is $set.elems, 1, 'trim set elems';
+
+subtest 'first trim match', {
+    given $set[0] {
+        is .<family>, 'Bitstream Vera Sans', 'family';
+        is .<style>, 'Roman', 'style';
+        is .<file>.IO.relative, 't/fonts/Vera.ttf', 'file';
+    }
+}
+
