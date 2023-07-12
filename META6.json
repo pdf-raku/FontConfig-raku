@@ -15,8 +15,8 @@
   "provides": {
     "FontConfig": "lib/FontConfig.rakumod",
     "FontConfig::Defs": "lib/FontConfig/Defs.rakumod",
-    "FontConfig::Raw": "lib/FontConfig/Raw.rakumod",
-    "FontConfig::Set": "lib/FontConfig/Set.rakumod"
+    "FontConfig::FontSet": "lib/FontConfig/FontSet.rakumod",
+    "FontConfig::Raw": "lib/FontConfig/Raw.rakumod"
   },
   "raku": "6",
   "resources": [

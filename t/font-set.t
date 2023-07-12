@@ -1,8 +1,8 @@
 use Test;
-plan 7;
+plan 8;
 use FontConfig;
 use FontConfig::Raw;
-use FontConfig::Set;
+use FontConfig::FontSet;
 constant $MinVersion = v2.13.01;
 
 INIT FontConfig.set-config-file: 't/custom-conf.xml';
@@ -11,7 +11,7 @@ my $LibVersion = FontConfig.version;
 ok $LibVersion >=  $MinVersion, "fontconfig library >= $MinVersion (minimum version)"
     or diag "** The fontconfig version ($LibVersion) is < $MinVersion. This module will not operate normally, or pass tests ***";
 
-my FontConfig::Set $set .= match: 'Arial,sans-serif';
+my FontConfig::FontSet:D $set .= parse: 'Arial,sans-serif';
 
 is $set.elems, 2, 'set elems';
 
@@ -31,7 +31,7 @@ subtest 'second match', {
     }
 }
 
-$set .= match: 'Arial,sans-serif', :trim;
+$set .= parse: 'Arial,sans-serif', :trim;
 
 is $set.elems, 1, 'trim set elems';
 
@@ -43,9 +43,9 @@ subtest 'first trim match', {
     }
 }
 
-subtest 'iteration', {
+subtest 'set iteration', {
     my $i = 0;
-    for FontConfig::Set.match('Arial,sans-serif:weight=bold') {
+    for FontConfig::FontSet.parse('Arial,sans-serif:weight=bold') {
         if $i == 0 {
             is .<family>, 'Bitstream Vera Sans', 'family[0]';
             is .<style>, 'Bold', 'style[0]';
@@ -54,10 +54,26 @@ subtest 'iteration', {
         elsif $i == 1 {
             is .<family>, 'Bitstream Vera Sans', 'family[1]';
             is .<style>, 'Roman', 'style[1]';
-            is .<file>.IO.relative, 't/fonts/Vera.ttf', 'fil[1]e';
+            is .<file>.IO.relative, 't/fonts/Vera.ttf', 'file[1]';
         }
         $i++;
     }
     is $i, 2, 'iteration count';
 }
 
+subtest 'fontconfig font-set', {
+    my FontConfig $patt .= parse('Arial,sans-serif:weight=bold');
+    my FontConfig @matches = $patt.font-set.Seq;
+    is +@matches, 2;
+    given @matches[0] {
+        is .<family>, 'Bitstream Vera Sans', 'family[0]';
+        is .<style>, 'Bold', 'style[0]';
+        is .<file>.IO.relative, 't/fonts/VeraBd.ttf', 'file[0]';
+    }
+    given @matches[1] {
+        is .<family>, 'Bitstream Vera Sans', 'family[1]';
+        is .<style>, 'Roman', 'style[1]';
+        is .<file>.IO.relative, 't/fonts/Vera.ttf', 'file[1]';
+    }
+ 
+}

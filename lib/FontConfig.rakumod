@@ -1,4 +1,5 @@
-unit class FontConfig:ver<0.0.4>;
+unit class FontConfig:ver<0.0.4>
+    does Iterable;
 
 use FontConfig::Raw;
 use FontConfig::Defs :enums;
@@ -16,8 +17,8 @@ submethod TWEAK(:$configure, :pattern($), *%props) {
     self{.key} = .value for %props;
 }
 
-method parse(Str:D $spec, |c) {
-    my FcPattern:D $pattern = FcPattern::parse($spec);
+method parse(Str:D $query, |c) {
+    my FcPattern:D $pattern = FcPattern::parse($query);
     self.new: :$pattern, |c;
 }
 
@@ -71,6 +72,10 @@ method match(::?CLASS:D $pattern is copy:) {
     else {
         self.WHAT;
     }
+}
+
+method font-set(::?CLASS:D $pattern: |c) handles <Seq List Array> {
+    (require ::('FontConfig::FontSet')).match($pattern, |c);
 }
 
 method clone(|c) {
