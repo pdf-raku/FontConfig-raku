@@ -22,7 +22,6 @@ method iterator(::?CLASS:D $set:) {
         has uint $.i = 0;
         has FontConfig::Set:D $.set is required;
         method pull-one {
-            warn $!i;
             $!i >= $!set.elems
                ?? IterationEnd
                !! $!set.AT-POS($!i++);
