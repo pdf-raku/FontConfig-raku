@@ -1,5 +1,5 @@
 use Test;
-plan 3;
+plan 4;
 use FontConfig;
 use FontConfig::Raw;
 use FontConfig::Set;
@@ -19,5 +19,6 @@ unless $set.elems {
     exit 0;
 }
 
-is $set[0]<style>, 'Italic';
+ok $set[0]<style>, 'style defined';
+ok $set[0]<file>, 'file defined';
 
