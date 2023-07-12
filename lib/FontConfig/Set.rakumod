@@ -25,7 +25,7 @@ method iterator(::?CLASS:D $set:) {
             warn $!i;
             $!i >= $!set.elems
                ?? IterationEnd
-               !! $!set[$!i++];
+               !! $!set.AT-POS($!i++);
         }
     }
     iterator.new: :$set;

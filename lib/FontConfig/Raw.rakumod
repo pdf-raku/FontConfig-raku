@@ -123,7 +123,8 @@ class FcPattern is repr('CPointer') is export {
     method iter-value(Iter, int32 $n, FcValue:D, int32 $b is rw --> int32) is native($FC-LIB) is symbol('FcPatternIterGetValue') {...};
     method iter-del(Iter, int32 $n, --> FcBool) is native($FC-LIB) is symbol('FcPatternRemove') {...};
     method TWEAK is native($FC-LIB) is symbol('FcPatternReference') {...};
-    method DESTROY is native($FC-LIB) is symbol('FcPatternDestroy') {...};
+    method !destroy is native($FC-LIB) is symbol('FcPatternDestroy') {...};
+    method DESTROY { self!destroy }
 }
 
 class FcFontSet is repr('CStruct') is export {
@@ -144,7 +145,8 @@ class FcConfig is repr('CPointer') is export {
     method font-sort(FcPattern, FcBool $trim, FcCharSet $csp, int32 $result is rw --> FcFontSet) is native($FC-LIB) is symbol('FcFontSort') {...}
     method render-prepare(FcPattern $pat, FcPattern $font --> FcPattern) is symbol('FcFontRenderPrepare') is native($FC-LIB) {...};
     method TWEAK is native($FC-LIB) is symbol('FcConfigReference') {...};
-    method DESTROY is native($FC-LIB) is symbol('FcConfigDestroy') {...};
+    method !destroy is native($FC-LIB) is symbol('FcConfigDestroy') {...};
+    submethod DESTROY { self!destroy }
 }
 
 our sub init(--> FcBool) is native($FC-LIB) is symbol('FcInit') {...}
