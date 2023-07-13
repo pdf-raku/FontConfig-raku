@@ -14,6 +14,8 @@
   "perl": "6.d",
   "provides": {
     "FontConfig": "lib/FontConfig.rakumod",
+    "FontConfig::Match": "lib/FontConfig/Match.rakumod",
+    "FontConfig::Pattern": "lib/FontConfig/Pattern.rakumod",
     "FontConfig::Defs": "lib/FontConfig/Defs.rakumod",
     "FontConfig::FontSet": "lib/FontConfig/FontSet.rakumod",
     "FontConfig::Raw": "lib/FontConfig/Raw.rakumod"

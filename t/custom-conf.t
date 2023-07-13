@@ -1,10 +1,12 @@
 use Test;
 plan 15;
 use FontConfig;
+use FontConfig::Pattern;
+use FontConfig::Match;
 FontConfig.set-config-file("t/custom-conf.xml");
 
-my FontConfig:D $patt .= new;
-my FontConfig $match;
+my FontConfig::Pattern:D $patt .= new;
+my FontConfig::Match $match;
 ok $patt.pattern.defined;
 is $patt.Str, '';
 is $patt.elems, 0;

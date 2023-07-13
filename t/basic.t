@@ -1,10 +1,11 @@
 use Test;
 plan 25;
-use FontConfig;
+use FontConfig::Match;
+use FontConfig::Pattern;
 use FontConfig::Raw;
 
 constant $MinVersion = v2.13.01;
-my $LibVersion = FontConfig.version;
+my $LibVersion = FontConfig::Pattern.version;
 
 note "fontconfig library version: $LibVersion";
 ok $LibVersion >=  $MinVersion, "fontconfig library >= $MinVersion (minimum version)"
@@ -12,7 +13,7 @@ ok $LibVersion >=  $MinVersion, "fontconfig library >= $MinVersion (minimum vers
 
 my FcName $weight = FcName::object('weight');
 is $weight.object, 'weight';
-my FontConfig:D $patt .= parse: 'Arial,sans-serif:style=italic';
+my FontConfig::Pattern:D $patt .= parse: 'Arial,sans-serif:style=italic';
 ok $patt.pattern.defined;
 is $patt.Str, 'Arial,sans:style=italic';
 is $patt.elems, 2;
@@ -35,7 +36,7 @@ isnt $patt.Str, 'Arial,sans:style=italic';
 nok $patt<file>:exists;
 nok $patt<file>.defined;
 
-my FontConfig $match;
+my FontConfig::Match $match;
 lives-ok {$match = $patt.match()};
 with $match {
     ok .<weight>:exists;

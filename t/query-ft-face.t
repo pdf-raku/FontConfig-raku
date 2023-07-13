@@ -1,6 +1,7 @@
 use Test;
 plan 3;
-use FontConfig;
+use FontConfig::Match;
+use FontConfig::Pattern;
 require ::('Font::FreeType');
 CATCH {
     when X::CompUnit::UnsatisfiedDependency {
@@ -12,7 +13,7 @@ CATCH {
 my $file = "t/fonts/Vera.ttf";
 my $face = ::('Font::FreeType').face($file);
 
-my FontConfig $patt;
+my FontConfig::Pattern $patt;
 lives-ok {$patt .= query-ft-face($face, :$file);}
 
 subtest 'query-ft-face() pattern attributes', {
@@ -27,7 +28,7 @@ subtest 'query-ft-face() pattern attributes', {
     }
 }
     
-my FontConfig $match;
+my FontConfig::Match $match;
 lives-ok {$match = $patt.match()};
 
 done-testing;

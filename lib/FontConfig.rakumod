@@ -9,22 +9,12 @@ has FcConfig $!config;
 method config { $!config //= FcConfig::load(); }
 
 has FcPattern:D $.pattern handles<elems format Str> = FcPattern::create();
-has Bool $!configured;
+has Bool $.configured is built;
 has %!store;
 
 submethod TWEAK(:$configure, :pattern($), *%props) {
     self.configure if $configure;
     self{.key} = .value for %props;
-}
-
-method parse(Str:D $query, |c) {
-    my FcPattern:D $pattern = FcPattern::parse($query);
-    self.new: :$pattern, |c;
-}
-
-method render-prepare(FcPattern $pat, |c) {
-    my FcPattern:D $pattern = self.config.render-prepare($!pattern, $pat);
-    self.new: :$pattern, |c;
 }
 
 method query-ft-face(Pointer() $face, Str :$file, Int :$id = 0, |c) {
@@ -55,6 +45,10 @@ method set-config-file(IO() $path is copy) {
     }
 }
 
+method match(|c) is DEPRECATED<Font::Config::Pattern.match> {
+    die "obselete";
+}
+
 method configure {
     $!configured ||= do {
         self.config.substitute($!pattern, FcMatchPattern);
@@ -62,20 +56,6 @@ method configure {
         %!store = ();
         True;
     }
-}
-
-method match(::?CLASS:D $pattern is copy:) {
-    $pattern .= clone: :configure unless $!configured;
-    with self.config.font-match($pattern.pattern, my int32 $result) -> FcPattern $pattern {
-        self.new: :$pattern;
-    }
-    else {
-        self.WHAT;
-    }
-}
-
-method font-set(::?CLASS:D $pattern: |c) handles <Seq List Array> {
-    (require ::('FontConfig::FontSet')).match($pattern, |c);
 }
 
 method clone(|c) {

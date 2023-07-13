@@ -1,15 +1,13 @@
 use Test;
-plan 8;
+plan 7;
 use FontConfig;
+use FontConfig::Pattern;
+use FontConfig::Match;
 use FontConfig::Raw;
 use FontConfig::FontSet;
 constant $MinVersion = v2.13.01;
 
 INIT FontConfig.set-config-file: 't/custom-conf.xml';
-
-my $LibVersion = FontConfig.version;
-ok $LibVersion >=  $MinVersion, "fontconfig library >= $MinVersion (minimum version)"
-    or diag "** The fontconfig version ($LibVersion) is < $MinVersion. This module will not operate normally, or pass tests ***";
 
 my FontConfig::FontSet:D $set .= parse: 'Arial,sans-serif';
 
@@ -62,8 +60,8 @@ subtest 'set iteration', {
 }
 
 subtest 'fontconfig font-set', {
-    my FontConfig $patt .= parse('Arial,sans-serif:weight=bold');
-    my FontConfig @matches = $patt.font-set.Seq;
+    my FontConfig::Pattern $patt .= parse('Arial,sans-serif:weight=bold');
+    my FontConfig::Match @matches = $patt.font-set.Seq;
     is +@matches, 2;
     given @matches[0] {
         is .<family>, 'Bitstream Vera Sans', 'family[0]';

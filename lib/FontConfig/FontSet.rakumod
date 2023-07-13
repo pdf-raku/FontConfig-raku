@@ -1,21 +1,22 @@
 unit class FontConfig::FontSet
     does Iterable;
 
-use FontConfig;
+use FontConfig::Match;
+use FontConfig::Pattern;
 use FontConfig::Raw;
 
-has FontConfig:D $.pat is required;
+has FontConfig::Pattern:D $.pat is required;
 has FcFontSet:D $.set .= new;
 has Bool:D $.trim = False;
 
 method elems { $!set.nfont }
 
-multi method AT-POS(UInt:D $i where $i < $!set.nfont) {
-    my $match = $!set.fonts[$i];
-    $!pat.render-prepare($match);
+multi method AT-POS(UInt:D $i where $i < $!set.nfont --> FontConfig::Match) {
+    my FcPattern:D $pattern = $!pat.config.render-prepare: $!pat.pattern, $!set.fonts[$i];
+    FontConfig::Match.new: :$pattern;
 }
 
-multi method AT-POS(UInt:D) { FontConfig }
+multi method AT-POS(UInt:D) { FontConfig::Match }
 
 method iterator(::?CLASS:D $set:) {
     class iterator does Iterator {
@@ -38,11 +39,11 @@ method parse(Str:D $query, |c) {
     my int32 $result-type;
     my FcPattern $pattern = FcPattern::parse($query)
         // die "unable to parse pattern: '$query'";
-    my FontConfig:D $pat .= new: :$pattern, :configure;
+    my FontConfig::Pattern:D $pat .= new: :$pattern, :configure;
     self.match: $pat, |c;
 }
 
-multi method match(FontConfig:D $pat, Bool :$trim = False) {
+multi method match(FontConfig::Pattern:D $pat, Bool :$trim = False) {
     my int32 $result-type;
     my FcFontSet $set = $pat.config.font-sort($pat.pattern, $trim, FcCharSet, $result-type);
     self.new: :$pat, :$set;
