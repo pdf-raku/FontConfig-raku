@@ -45,10 +45,6 @@ method set-config-file(IO() $path is copy) {
     }
 }
 
-method match(|c) is DEPRECATED<Font::Config::Pattern.match> {
-    die "obselete";
-}
-
 method configure {
     $!configured ||= do {
         self.config.substitute($!pattern, FcMatchPattern);
@@ -133,6 +129,14 @@ method Hash handles<keys values pairs AT-KEY EXISTS-KEY>{
         } while $!pattern.iter-next: $iter;
     }
     %!store;
+}
+
+method match(|c) is DEPRECATED<Font::Config::Pattern.match> {
+    (require FontConfig::Pattern).new(:$!pattern).match: |c;
+}
+
+method parse(|c) is hidden-from-backtrace is DEPRECATED<FontConfig::Pattern.parse> {
+    (require FontConfig::Pattern).parse: |c;
 }
 
 multi method FALLBACK(FontConfig:D: $prop where FcName::object($prop).type != FcTypeUnknown) is rw {
