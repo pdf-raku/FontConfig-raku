@@ -8,10 +8,12 @@ Synopsis
 
 ```raku
 use FontConfig;
+use FontConfig::Pattern;
+use FontConfig::Match;
 # optional: fontconfig uses the default system configuration, by default 
 INIT FontConfig.set-config-file: 'my-fonts.conf';
 
-my FontConfig $patt .= parse: 'Arial,sans:style<italic>';
+my FontConfig::Pattern $patt .= parse: 'Arial,sans:style<italic>';
 # -- OR --
 $patt .= new: :family<Arial sans>, :style<italic>;
 
@@ -19,7 +21,7 @@ $patt.weight = 'bold';
 say $patt.Str;
 # Arial,sans:style=italic:weight=205
 
-my FontConfig $match = $patt.match;
+my FontConfig::Match $match = $patt.match;
 say $match.file;
 say $match.format('%{file}');
 # e.g. /usr/share/fonts/truetype/liberation/LiberationSans-Regular.ttf
