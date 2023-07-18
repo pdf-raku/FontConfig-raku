@@ -1,3 +1,4 @@
+# Base class for FontConfig Patterns and Matches
 unit class FontConfig:ver<0.0.4>
     does Iterable;
 
@@ -151,3 +152,110 @@ multi method FALLBACK(\name, |) {
 }
 
 INIT FontConfig::Raw::init();
+
+=begin pod
+
+=head2 Methods
+
+=head3 new
+
+=code :lang<raku> method new(*%atts --> FontConfig)
+
+Create a new pattern for font matching purposes
+
+
+=head3 parse
+
+=code :lang<raku> method parse(Str $patt --> FontConfig)
+
+Create a new pattern from a parsed FontConfig pattern.
+
+=head3 AT-KEY, ASSIGN-KEY, keys, elems, pairs, values
+
+    $patt<weight> = 205;
+    $patt<weight> = 'bold';
+    say $patt<weight>;
+    $patt<weight>:delete;
+
+This module provides am associative interface to [FontConfig properties](https://www.freedesktop.org/software/fontconfig/fontconfig-user.html).
+
+Numeric values in the pattern may be set to ranges:
+
+=code :lang<raku> $patt<weight> = 195..205;
+
+Values may also hold a list, such as a list of font families:
+
+=code :lang<raku> $patt<family> = <Arial sans>;
+
+=head3 match
+
+=code :lang<raku> method match(--> FontConfig)
+
+This method returns a FontConfig object for the system font that best
+matches this pattern.
+
+The matched object is populated with the actual font properties. The
+`file` property contains the path to the font.
+
+    my FontConfig $match = $pattern.match;
+    say 'matched font: ' ~ $match<fullname>;
+    say 'actual weight: ' ~ $match<weight>;
+    say 'font file: ' ~ $match<file>;
+
+=head3 constant
+
+=code :lang<raku> method constant(Str $name --> UInt)
+
+Fontconfig has symbolic constants for numeric properties. For example, in the pattern: `Ariel;weight=bold`, `bold`,
+evaluates to 200. The `constant()` method can be used to look-up these constants.
+
+    my \bold = FontConfig.constant("bold"); # 200
+    if $match<bold> >= bold {
+        say "matching font is bold";
+    }
+
+Note that the Raku bindings resolve symbolic constants when a string is assigned
+to a numeric property. So:
+
+=code :lang<raku> $match<weight> = "extrabold";
+
+Is equivalent to:
+
+=code :lang<raku> $match<weight> = FontConfig.constant("extrabold");
+
+=head3 query-ft-face
+
+=code :lang<raku> method query-ft-face(Pointer() $face, Str() :$file, UInt :$id --> FontConfig)
+
+This method computes a FontConfig pattern based on the attributes of an existing
+FreeType font. It can be used to discover FontConfig attributes for a specific font.
+
+The match() method will find the best font, reachable by FontConfig's configuration,
+that matches the original font, which may or may not be the original font.
+
+**The following example requires installation of the `Font::FreeType` module.**
+
+    use FontConfig;
+    use Font::FreeType;
+    my $file = "t/fonts/Vera.ttf";
+    my Font::FreeType::Face $face = Font::FreeType.face($file);
+    my FontConfig $patt .= query-ft-face($face, :$file);
+    say $patt.fullname; # Bitstream Vera Sans
+    say $patt.file;     # t/fonts/Vera.ttf
+    say $patt.weight;   # 80
+
+
+=head3 Str
+
+The Str method serializes a pattern to a string representation;
+
+=code :lang<raku> say $patt.Str; # Arial,sans:style=italic:weight=205
+
+=head3 version
+
+=code :lang<raku> method version returns Version
+
+This method returns the installed fontconfig library version. Please note that
+the minimum supported version is `v2.13.1`.
+
+=end pod

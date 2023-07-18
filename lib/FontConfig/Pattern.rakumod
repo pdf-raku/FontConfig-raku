@@ -21,6 +21,6 @@ method match(::?CLASS:D $pattern is copy:) {
     }
 }
 
-method font-set(::?CLASS:D $pattern: |c) handles <Seq List Array> {
-    (require ::('FontConfig::FontSet')).match($pattern, |c);
+method match-list(::?CLASS:D $pattern: |c) handles <Seq List Array> {
+    (require ::('FontConfig::Match::List')).match($pattern, |c);
 }

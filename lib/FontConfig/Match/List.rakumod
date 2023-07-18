@@ -1,4 +1,4 @@
-unit class FontConfig::FontSet
+unit class FontConfig::Match::List
     does Iterable;
 
 use FontConfig::Match;
@@ -21,7 +21,7 @@ multi method AT-POS(UInt:D) { FontConfig::Match }
 method iterator(::?CLASS:D $set:) {
     class iterator does Iterator {
         has uint $.i = 0;
-        has FontConfig::FontSet:D $.set is required;
+        has FontConfig::Match::List:D $.set is required;
         method pull-one {
             $!i >= $!set.elems
                ?? IterationEnd
