@@ -1,3 +1,7 @@
+[[Raku PDF Project]](https://pdf-raku.github.io)
+/ [[FontConfig Module]](https://pdf-raku.github.io/FontConfig-raku/)
+[![Build Status](https://travis-ci.org/pdf-raku/FontConfig-raku.svg?branch=master)](https://travis-ci.org/pdf-raku/FontConfig-raku)
+
 FontConfig-raku
 =====
 

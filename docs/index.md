@@ -1,3 +1,7 @@
+[[Raku PDF Project]](https://pdf-raku.github.io)
+/ [[FontConfig Module]](https://pdf-raku.github.io/FontConfig-raku/)
+[![Build Status](https://travis-ci.org/pdf-raku/FontConfig-raku.svg?branch=master)](https://travis-ci.org/pdf-raku/FontConfig-raku)
+
 FontConfig-raku
 =====
 
@@ -62,7 +66,8 @@ current process to set `FONTCONFIG_FILE`. This acts globally and should be calle
 * [FontConfig](https://pdf-raku.github.io/FontConfig-raku/) - FontConfig base class for Patterns and Matches
 * [FontConfig::Pattern](https://pdf-raku.github.io/FontConfig-raku/Pattern) - FontConfig query Pattern
 * [FontConfig::Match](https://pdf-raku.github.io/FontConfig-raku/Match) - FontConfig matching font descriptor
-* [FontConfig::MatchList](https://pdf-raku.github.io/FontConfig-raku/MatchList) - Sorted list of FontConfig::Match matching objectwss
+* [FontConfig::Match::List](https://pdf-raku.github.io/FontConfig-raku/Match/List) - Sorted list of FontConfig::Match matching objectwss
+* [FontConfig::Raw](https://pdf-raku.github.io/FontConfig-raku/Raw) - FontConfig native bindings
 
 ## Install
 
