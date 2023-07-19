@@ -4,17 +4,17 @@ use FontConfig;
 use FontConfig::Pattern;
 use FontConfig::Match;
 use FontConfig::Raw;
-use FontConfig::Match::List;
+use FontConfig::Match::Series;
 constant $MinVersion = v2.13.01;
 
 INIT FontConfig.set-config-file: 't/custom-conf.xml';
 
-my FontConfig::Match::List:D $list .= parse: 'Arial,sans-serif';
+my FontConfig::Match::Series:D $series .= parse: 'Arial,sans-serif';
 
-is $list.elems, 2, 'list elems';
+is $series.elems, 2, 'series elems';
 
 subtest 'first match', {
-    given $list[0] {
+    given $series[0] {
         is .<family>, 'Bitstream Vera Sans', 'family';
         is .<style>, 'Roman', 'style';
         is .<file>.IO.relative, 't/fonts/Vera.ttf', 'file';
@@ -22,28 +22,28 @@ subtest 'first match', {
 }
 
 subtest 'second match', {
-    given $list[1] {
+    given $series[1] {
         is .<family>, 'Bitstream Vera Sans', 'family';
         is .<style>, 'Bold', 'style';
         is .<file>.IO.relative, 't/fonts/VeraBd.ttf', 'file';
     }
 }
 
-$list .= parse: 'Arial,sans-serif', :trim;
+$series .= parse: 'Arial,sans-serif', :trim;
 
-is $list.elems, 1, 'trim list elems';
+is $series.elems, 1, 'trim series elems';
 
 subtest 'first trim match', {
-    given $list[0] {
+    given $series[0] {
         is .<family>, 'Bitstream Vera Sans', 'family';
         is .<style>, 'Roman', 'style';
         is .<file>.IO.relative, 't/fonts/Vera.ttf', 'file';
     }
 }
 
-subtest 'list iteration', {
+subtest 'series iteration', {
     my $i = 0;
-    for FontConfig::Match::List.parse('Arial,sans-serif:weight=bold') {
+    for FontConfig::Match::Series.parse('Arial,sans-serif:weight=bold') {
         if $i == 0 {
             is .<family>, 'Bitstream Vera Sans', 'family[0]';
             is .<style>, 'Bold', 'style[0]';
@@ -59,9 +59,9 @@ subtest 'list iteration', {
     is $i, 2, 'iteration count';
 }
 
-subtest 'fontconfig match-list', {
+subtest 'fontconfig match-series', {
     my FontConfig::Pattern $patt .= parse('Arial,sans-serif:weight=bold');
-    my FontConfig::Match @matches = $patt.match-list.Seq;
+    my FontConfig::Match @matches = $patt.match-series.Seq;
     is +@matches, 2;
     given @matches[0] {
         is .<family>, 'Bitstream Vera Sans', 'family[0]';

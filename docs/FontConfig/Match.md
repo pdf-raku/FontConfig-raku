@@ -3,5 +3,8 @@
  / [FontConfig](https://pdf-raku.github.io/FontConfig-raku/FontConfig)
  :: [Match](https://pdf-raku.github.io/FontConfig-raku/FontConfig/Match)
 
+class FontConfig::Match
+-----------------------
 
+A result from matching a FontConfig Pattern
 

@@ -63,10 +63,10 @@ current process to set `FONTCONFIG_FILE`. This acts globally and should be calle
 
 ## Modules in this distribution
 
-* [FontConfig](https://pdf-raku.github.io/FontConfig-raku/FontConfig/) - FontConfig base class for Patterns and Matches
+* [FontConfig](https://pdf-raku.github.io/FontConfig-raku/FontConfig) - FontConfig base class for Patterns and Matches
 * [FontConfig::Pattern](https://pdf-raku.github.io/FontConfig-raku/FontConfig/Pattern) - FontConfig query Pattern
 * [FontConfig::Match](https://pdf-raku.github.io/FontConfig-raku/FontConfig/Match) - FontConfig matching font descriptor
-* [FontConfig::Match::List](https://pdf-raku.github.io/FontConfig-raku/FontConfig/Match/List) - Sorted list of FontConfig::Match matching objectwss
+* [FontConfig::Match::Series](https://pdf-raku.github.io/FontConfig-raku/FontConfig/Match/Series) - Sorted series of FontConfig::Match matching objects
 * [FontConfig::Raw](https://pdf-raku.github.io/FontConfig-raku/FontConfig/Raw) - FontConfig native bindings
 
 ## Install

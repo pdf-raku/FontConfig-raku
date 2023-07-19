@@ -157,51 +157,6 @@ INIT FontConfig::Raw::init();
 
 =head2 Methods
 
-=head3 new
-
-=code :lang<raku> method new(*%atts --> FontConfig)
-
-Create a new pattern for font matching purposes
-
-
-=head3 parse
-
-=code :lang<raku> method parse(Str $patt --> FontConfig)
-
-Create a new pattern from a parsed FontConfig pattern.
-
-=head3 AT-KEY, ASSIGN-KEY, keys, elems, pairs, values
-
-    $patt<weight> = 205;
-    $patt<weight> = 'bold';
-    say $patt<weight>;
-    $patt<weight>:delete;
-
-This module provides am associative interface to [FontConfig properties](https://www.freedesktop.org/software/fontconfig/fontconfig-user.html).
-
-Numeric values in the pattern may be set to ranges:
-
-=code :lang<raku> $patt<weight> = 195..205;
-
-Values may also hold a list, such as a list of font families:
-
-=code :lang<raku> $patt<family> = <Arial sans>;
-
-=head3 match
-
-=code :lang<raku> method match(--> FontConfig)
-
-This method returns a FontConfig object for the system font that best
-matches this pattern.
-
-The matched object is populated with the actual font properties. The
-`file` property contains the path to the font.
-
-    my FontConfig $match = $pattern.match;
-    say 'matched font: ' ~ $match<fullname>;
-    say 'actual weight: ' ~ $match<weight>;
-    say 'font file: ' ~ $match<file>;
-
 =head3 constant
 
 =code :lang<raku> method constant(Str $name --> UInt)
@@ -244,6 +199,24 @@ that matches the original font, which may or may not be the original font.
     say $patt.file;     # t/fonts/Vera.ttf
     say $patt.weight;   # 80
 
+=head3 AT-KEY, ASSIGN-KEY, keys, elems, pairs, values
+
+    =begin code :lang<raku>
+    $patt<weight> = 205;
+    $patt<weight> = 'bold';
+    say $patt<weight>;
+    $patt<weight>:delete;
+    =end code
+
+This class provides am associative interface to [FontConfig properties](https://www.freedesktop.org/software/fontconfig/fontconfig-user.html).
+
+Numeric values in the pattern may be set to ranges:
+
+=code :lang<raku> $patt<weight> = 195..205;
+
+Values may also hold a list, such as a list of font families:
+
+=code :lang<raku> $patt<family> = <Arial sans>;
 
 =head3 Str
 

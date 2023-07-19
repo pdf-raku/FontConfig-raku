@@ -45,4 +45,4 @@ $(DocLinker) :
 Pod-To-Markdown-installed :
 	@raku -M Pod::To::Markdown -c
 
-doc : $(DocLinker) Pod-To-Markdown-installed docs/index.md docs/FontConfig.md docs/FontConfig/Pattern.md  docs/FontConfig/Match.md docs/FontConfig/Raw.md docs/FontConfig/Match/List.md
+doc : $(DocLinker) Pod-To-Markdown-installed docs/index.md docs/FontConfig.md docs/FontConfig/Pattern.md  docs/FontConfig/Match.md docs/FontConfig/Raw.md docs/FontConfig/Match/Series.md

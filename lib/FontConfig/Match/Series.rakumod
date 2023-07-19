@@ -1,4 +1,5 @@
-unit class FontConfig::Match::List
+#| A sorted series of results from matching a FontConfig pattern
+unit class FontConfig::Match::Series
     does Iterable;
 
 use FontConfig::Match;
@@ -21,7 +22,7 @@ multi method AT-POS(UInt:D) { FontConfig::Match }
 method iterator(::?CLASS:D $set:) {
     class iterator does Iterator {
         has uint $.i = 0;
-        has FontConfig::Match::List:D $.set is required;
+        has FontConfig::Match::Series:D $.set is required;
         method pull-one {
             $!i >= $!set.elems
                ?? IterationEnd
