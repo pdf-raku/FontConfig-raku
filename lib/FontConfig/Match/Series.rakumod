@@ -49,3 +49,11 @@ multi method match(FontConfig::Pattern:D $pat, Bool :$trim = False) {
     my FcFontSet $set = $pat.config.font-sort($pat.pattern, $trim, FcCharSet, $result-type);
     self.new: :$pat, :$set;
 }
+
+=begin pod
+
+=head2 Description
+
+This class returns a sequence of matches from a FontConfig pattern, ordered by best match first. This may be useful, if there are extra selection or sort critera, or the final selection is being performed interactively.
+
+=end pod

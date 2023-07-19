@@ -21,6 +21,9 @@ $(SRC)%O% : $(SRC).c $(SRC).h
 	%CC% -I $(DIR) -c %CCSHARED% %CCFLAGS% %CCOUT%$(SRC)%O% $(SRC).c
 
 test : all
+	@prove6 -I . -j $(TEST_JOBS)
+
+loudtest : all
 	@prove6 -I . -v
 
 clean :

@@ -2,6 +2,11 @@
  / [[FontConfig Module]](https://pdf-raku.github.io/FontConfig-raku)
  / [FontConfig](https://pdf-raku.github.io/FontConfig-raku/FontConfig)
 
+Description
+-----------
+
+[FontConfig](https://pdf-raku.github.io/FontConfig-raku/FontConfig) is the base class for [FontConfig::Pattern](FontConfig::Pattern) (queries) and [FontConfig::Match](FontConfig::Match) (matches).
+
 Methods
 -------
 
@@ -34,14 +39,16 @@ The match() method will find the best font, reachable by FontConfig's configurat
 
 **The following example requires installation of the `Font::FreeType` module.**
 
-    use FontConfig;
-    use Font::FreeType;
-    my $file = "t/fonts/Vera.ttf";
-    my Font::FreeType::Face $face = Font::FreeType.face($file);
-    my FontConfig $patt .= query-ft-face($face, :$file);
-    say $patt.fullname; # Bitstream Vera Sans
-    say $patt.file;     # t/fonts/Vera.ttf
-    say $patt.weight;   # 80
+```raku
+use FontConfig;
+use Font::FreeType;
+my $file = "t/fonts/Vera.ttf";
+my Font::FreeType::Face $face = Font::FreeType.face($file);
+my FontConfig $patt .= query-ft-face($face, :$file);
+say $patt.fullname; # Bitstream Vera Sans
+say $patt.file;     # t/fonts/Vera.ttf
+say $patt.weight;   # 80
+```
 
 ### AT-KEY, ASSIGN-KEY, keys, elems, pairs, values
 

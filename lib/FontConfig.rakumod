@@ -104,7 +104,7 @@ method DELETE-KEY(Str:D $key) {
     $v;
 }
 
-method Hash handles<keys values pairs AT-KEY EXISTS-KEY>{
+method Hash handles<keys values pairs EXISTS-KEY>{
     unless %!store {
         my FcValue $value .= new;
         my FcPattern::Iter $iter .= new;
@@ -132,6 +132,27 @@ method Hash handles<keys values pairs AT-KEY EXISTS-KEY>{
     %!store;
 }
 
+my constant %PropTypes = %(
+    :antialias(Bool), :aspect(Num), :autohint(Bool), :capability(Str),
+    :charset(FcCharSet), :color(Bool), :decorative(Bool), :dpi(Num),
+    :embeddedbitmap(Bool), :embolden(Bool), :family(Str),
+    :familylang(Str), :file(Str), :fontfeatures(Str),
+    :fontformat(Str), :fontvariations(Str), :fontversion(Int),
+    :foundry(Str), :ftface(Pointer), :fullname(Str),
+    :fullnamelang(Str), :globaladvance(Bool), :hash(Str),
+    :hinting(Bool), :hintstyle(Int), :index(Int), :lang(Str),
+    :lcdfilter(Int), :minspace(Bool), :namelang(Str), :outline(Bool),
+    :pixelsize(Num), :postscriptname(Str), :prgname(Str),
+    :rasterizer(Str), :rgba(Int), :scalable(Bool), :scale(Num),
+    :size(Range), :slant(Int), :source(Str), :spacing(Int),
+    :style(Str), :stylelang(Str), :symbol(Bool), :variable(Bool),
+    :verticallayout(Bool), :weight(Int), :width(Int)
+);
+
+method AT-KEY(Str:D() $k) {
+    self.Hash{$k} // %PropTypes{$k}
+}
+
 method match(|c) is DEPRECATED<Font::Config::Pattern.match> {
     (require FontConfig::Pattern).new(:$!pattern).match: |c;
 }
@@ -154,6 +175,10 @@ multi method FALLBACK(\name, |) {
 INIT FontConfig::Raw::init();
 
 =begin pod
+
+=head2 Description
+
+L<FontConfig> is the base class for L<FontConfig::Pattern> (queries) and L<FontConfig::Match> (matches).
 
 =head2 Methods
 
@@ -190,6 +215,7 @@ that matches the original font, which may or may not be the original font.
 
 **The following example requires installation of the `Font::FreeType` module.**
 
+    =begin code :lang<raku>
     use FontConfig;
     use Font::FreeType;
     my $file = "t/fonts/Vera.ttf";
@@ -198,6 +224,7 @@ that matches the original font, which may or may not be the original font.
     say $patt.fullname; # Bitstream Vera Sans
     say $patt.file;     # t/fonts/Vera.ttf
     say $patt.weight;   # 80
+    =end code
 
 =head3 AT-KEY, ASSIGN-KEY, keys, elems, pairs, values
 

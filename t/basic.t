@@ -1,5 +1,5 @@
 use Test;
-plan 25;
+plan 26;
 use FontConfig::Match;
 use FontConfig::Pattern;
 use FontConfig::Raw;
@@ -23,6 +23,7 @@ $patt.weight = 'bold';
 is-deeply $patt.weight, 200;
 $patt.weight = 200..210;
 is-deeply $patt.weight, 200..210;
+is-deeply $patt.aspect, Num;
 
 is-deeply $patt.keys.sort, ("family", "style", "weight");
 is $patt<style>, 'italic';

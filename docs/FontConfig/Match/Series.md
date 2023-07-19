@@ -9,3 +9,8 @@ class FontConfig::Match::Series
 
 A sorted series of results from matching a FontConfig pattern
 
+Description
+-----------
+
+This class returns a sequence of matches from a FontConfig pattern, ordered by best match first. This may be useful, if there are extra selection or sort critera, or the final selection is being performed interactively.
+
