@@ -7,7 +7,7 @@ use FontConfig::Defs :enums;
 use NativeCall;
 
 has FcConfig $!config;
-method config { $!config //= FcConfig::load(); }
+method !config { $!config //= FcConfig::load(); }
 
 has FcPattern:D $.pattern handles<elems format Str> = FcPattern::create();
 has Bool $.configured is built;
@@ -48,11 +48,12 @@ method set-config-file(IO() $path is copy) {
 
 method configure {
     $!configured ||= do {
-        self.config.substitute($!pattern, FcMatchPattern);
+        self!config.substitute($!pattern, FcMatchPattern);
         $!pattern.substitute();
         %!store = ();
         True;
     }
+    self!config;
 }
 
 method clone(|c) {

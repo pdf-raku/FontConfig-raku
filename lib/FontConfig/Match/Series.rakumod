@@ -13,7 +13,7 @@ has Bool:D $.trim = False;
 method elems { $!set.nfont }
 
 multi method AT-POS(UInt:D $i where $i < $!set.nfont --> FontConfig::Match) {
-    my FcPattern:D $pattern = $!pat.config.render-prepare: $!pat.pattern, $!set.fonts[$i];
+    my FcPattern:D $pattern = $!pat.configure.render-prepare: $!pat.pattern, $!set.fonts[$i];
     FontConfig::Match.new: :$pattern;
 }
 
@@ -46,11 +46,23 @@ method parse(Str:D $query, |c) {
 
 multi method match(FontConfig::Pattern:D $pat, Bool :$trim = False) {
     my int32 $result-type;
-    my FcFontSet $set = $pat.config.font-sort($pat.pattern, $trim, FcCharSet, $result-type);
+    my FcFontSet $set = $pat.configure.font-sort($pat.pattern, $trim, FcCharSet, $result-type);
     self.new: :$pat, :$set;
 }
 
 =begin pod
+
+=head2 Synopsis
+
+=begin code :lang<raku>
+use FontConfig::Match::Series;
+my $n = 0;
+say "Ten best match fonts:";
+for FontConfig::Match::Series.parse('Arial,sans:style<italic>') -> FontConfig::Match $match {
+    say (++$n)~ $match.format(':%{fullname}: %{file} (%{fontformat})');
+    last if $n >= 10;
+}
+=end code
 
 =head2 Description
 

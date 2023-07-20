@@ -72,5 +72,5 @@ Create a new pattern from a parsed FontConfig pattern.
 
     :lang<raku> method match(--> FontConfig::Match::Series)
 
-This method returns a series of [FontConfig::Match](FontConfig::Match) objects ordered by closest match first.
+This method returns a series of [FontConfig::Match](https://pdf-raku.github.io/FontConfig-raku/FontConfig/Match) objects ordered by closest match first.
 

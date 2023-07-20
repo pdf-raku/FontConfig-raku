@@ -9,6 +9,19 @@ class FontConfig::Match::Series
 
 A sorted series of results from matching a FontConfig pattern
 
+Synopsis
+--------
+
+```raku
+use FontConfig::Match::Series;
+my $n = 0;
+say "Ten best match fonts:";
+for FontConfig::Match::Series.parse('Arial,sans:style<italic>') -> FontConfig::Match $match {
+    say (++$n)~ $match.format(':%{fullname}: %{file} (%{fontformat})');
+    last if $n >= 10;
+}
+```
+
 Description
 -----------
 

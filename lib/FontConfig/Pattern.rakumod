@@ -14,7 +14,7 @@ method parse(Str:D $query, |c) {
 
 method match(::?CLASS:D $pattern is copy:) {
     $pattern .= clone: :configure unless $.configured;
-    with self.config.font-match($pattern.pattern, my int32 $result) -> FcPattern $pattern {
+    with self.configure.font-match($pattern.pattern, my int32 $result) -> FcPattern $pattern {
         FontConfig::Match.new: :$pattern;
     }
     else {

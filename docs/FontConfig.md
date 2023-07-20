@@ -5,7 +5,7 @@
 Description
 -----------
 
-[FontConfig](https://pdf-raku.github.io/FontConfig-raku/FontConfig) is the base class for [FontConfig::Pattern](FontConfig::Pattern) (queries) and [FontConfig::Match](FontConfig::Match) (matches).
+[FontConfig](https://pdf-raku.github.io/FontConfig-raku/FontConfig) is the base class for [FontConfig::Pattern](https://pdf-raku.github.io/FontConfig-raku/FontConfig/Pattern) (queries) and [FontConfig::Match](https://pdf-raku.github.io/FontConfig-raku/FontConfig/Match) (matches).
 
 Methods
 -------
