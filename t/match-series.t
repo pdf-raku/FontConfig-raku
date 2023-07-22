@@ -59,9 +59,7 @@ subtest 'series iteration', {
     is $i, 2, 'iteration count';
 }
 
-subtest 'fontconfig match-series', {
-    my FontConfig::Pattern $patt .= parse('Arial,sans-serif:weight=bold');
-    my FontConfig::Match @matches = $patt.match-series.Seq;
+sub test-series(@matches) {
     is +@matches, 2;
     given @matches[0] {
         is .<family>, 'Bitstream Vera Sans', 'family[0]';
@@ -73,5 +71,18 @@ subtest 'fontconfig match-series', {
         is .<style>, 'Roman', 'style[1]';
         is .<file>.IO.relative, 't/fonts/Vera.ttf', 'file[1]';
     }
- 
+}
+
+subtest 'fontconfig match-series', {
+    my FontConfig::Pattern $patt .= parse('Arial,sans-serif:weight=bold');
+
+    my FontConfig::Match @matches = $patt.match-series;
+    test-series @matches;
+
+    @matches = $patt.Seq;
+    test-series @matches;
+
+    @matches = ();
+    @matches.push: $_ for $patt.parse('Arial,sans-serif:weight=bold');
+    test-series @matches;
 }

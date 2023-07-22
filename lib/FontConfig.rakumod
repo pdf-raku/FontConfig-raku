@@ -1,6 +1,5 @@
 # Base class for FontConfig Patterns and Matches
-unit class FontConfig:ver<0.0.4>
-    does Iterable;
+unit class FontConfig:ver<0.0.4>;
 
 use FontConfig::Raw;
 use FontConfig::Defs :enums;

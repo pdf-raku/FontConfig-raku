@@ -1,5 +1,6 @@
 #| FontConfig patterns and searching
-unit class FontConfig::Pattern;
+unit class FontConfig::Pattern
+    does Iterable;
 
 use FontConfig;
 also is FontConfig;
@@ -22,7 +23,7 @@ method match(::?CLASS:D $pattern is copy:) {
     }
 }
 
-method match-series(::?CLASS:D $pattern: |c) handles <Seq List Array> {
+method match-series(::?CLASS:D $pattern: |c) handles <Seq List Array iterator> {
     (require ::('FontConfig::Match::Series')).match($pattern, |c);
 }
 
