@@ -154,7 +154,8 @@ method AT-KEY(Str:D() $k) {
     self.Hash{$k} // %PropTypes{$k}
 }
 
-method match(|c) is DEPRECATED<Font::Config::Pattern.match> {
+method match(|c) # is DEPRECATED<Font::Config::Pattern.match>
+{
     (require FontConfig::Pattern).new(:$!pattern).match: |c;
 }
 
@@ -185,7 +186,8 @@ L<FontConfig> is the base class for L<FontConfig::Pattern> (queries) and L<FontC
 
 =head3 constant
 
-=code :lang<raku> method constant(Str $name --> UInt)
+=for code :lang<raku>
+method constant(Str $name --> UInt)
 
 Fontconfig has symbolic constants for numeric properties. For example, in the pattern: `Ariel;weight=bold`, `bold`,
 evaluates to 200. The `constant()` method can be used to look-up these constants.
@@ -198,15 +200,18 @@ evaluates to 200. The `constant()` method can be used to look-up these constants
 Note that the Raku bindings resolve symbolic constants when a string is assigned
 to a numeric property. So:
 
-=code :lang<raku> $match<weight> = "extrabold";
+=for code :lang<raku>
+$match<weight> = "extrabold";
 
 Is equivalent to:
 
-=code :lang<raku> $match<weight> = FontConfig.constant("extrabold");
+=for code :lang<raku>
+$match<weight> = FontConfig.constant("extrabold");
 
 =head3 query-ft-face
 
-=code :lang<raku> method query-ft-face(Pointer() $face, Str() :$file, UInt :$id --> FontConfig)
+=for code :lang<raku>
+method query-ft-face(Pointer() $face, Str() :$file, UInt :$id --> FontConfig)
 
 This method computes a FontConfig pattern based on the attributes of an existing
 FreeType font. It can be used to discover FontConfig attributes for a specific font.
@@ -240,21 +245,25 @@ This class provides am associative interface to [FontConfig properties](https://
 
 Numeric values in the pattern may be set to ranges:
 
-=code :lang<raku> $patt<weight> = 195..205;
+=for code :lang<raku>
+$patt<weight> = 195..205;
 
 Values may also hold a list, such as a list of font families:
 
-=code :lang<raku> $patt<family> = <Arial sans>;
+=for code :lang<raku>
+$patt<family> = <Arial sans>;
 
 =head3 Str
 
 The Str method serializes a pattern to a string representation;
 
-=code :lang<raku> say $patt.Str; # Arial,sans:style=italic:weight=205
+=for code :lang<raku>
+say $patt.Str; # Arial,sans:style=italic:weight=205
 
 =head3 version
 
-=code :lang<raku> method version returns Version
+=for code :lang<raku>
+method version returns Version
 
 This method returns the installed fontconfig library version. Please note that
 the minimum supported version is `v2.13.1`.

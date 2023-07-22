@@ -36,13 +36,15 @@ This class inherits from L<FontConfig> and has all its methods available.
 
 =head3 new
 
-=code :lang<raku> method new(*%atts --> FontConfig::Pattern)
+=for code :lang<raku>
+method new(*%atts --> FontConfig::Pattern)
 
 Create a new pattern for font matching purposes
 
 =head3 parse
 
-=code :lang<raku> method parse(Str $patt --> FontConfig::Pattern)
+=for code :lang<raku>
+method parse(Str $patt --> FontConfig::Pattern)
 
 Create a new pattern from a parsed FontConfig pattern.
 
@@ -59,15 +61,18 @@ This module provides am associative interface to [FontConfig properties](https:/
 
 Numeric values in the pattern may be set to ranges:
 
-=code :lang<raku> $patt<weight> = 195..205;
+=for code :lang<raku>
+$patt<weight> = 195..205;
 
 Values may also hold a list, such as a list of font families:
 
-=code :lang<raku> $patt<family> = <Arial sans>;
+=for code :lang<raku>
+$patt<family> = <Arial sans>;
 
 =head3 match
 
-=code :lang<raku> method match(--> FontConfig::Match)
+=for code :lang<raku>
+method match(--> FontConfig::Match)
 
 This method returns a FontConfig object for the system font that best
 matches this pattern.
@@ -85,14 +90,16 @@ The matched object is populated with the actual font properties. The
 
 =head3 parse
 
-=code :lang<raku> method parse(Str $patt --> FontConfig::Pattern)
+=for code :lang<raku>
+method parse(Str $patt --> FontConfig::Pattern)
 
 Create a new pattern from a parsed FontConfig pattern.
 
 
 =head3 match-series
 
-=code :lang<raku> method match(--> FontConfig::Match::Series)
+=for code :lang<raku>
+method match(--> FontConfig::Match::Series)
 
 This method returns a series of L<FontConfig::Match> objects ordered by 
 closest match first.

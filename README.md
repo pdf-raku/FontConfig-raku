@@ -17,7 +17,8 @@ use FontConfig::Match;
 # optional: fontconfig uses the default system configuration, by default 
 INIT FontConfig.set-config-file: 'my-fonts.conf';
 
-my FontConfig::Pattern $patt .= parse: 'Arial,sans:style<italic>';
+my FontConfig::Pattern $patt;
+$patt .= parse: 'Arial,sans:style<italic>';
 # -- OR --
 $patt .= new: :family<Arial sans>, :style<italic>;
 
@@ -61,7 +62,7 @@ This may need to be set, prior to running your programs, to provide a custom con
 The FontConfig class has one method `set-config-file($path)` that can be called from the
 current process to set `FONTCONFIG_FILE`. This acts globally and should be called once, before using any other methods.
 
-## Modules in this distribution
+## Classes in this distribution
 
 * [FontConfig](https://pdf-raku.github.io/FontConfig-raku/FontConfig) - FontConfig base class for Patterns and Matches
 * [FontConfig::Pattern](https://pdf-raku.github.io/FontConfig-raku/FontConfig/Pattern) - FontConfig query Pattern

@@ -12,7 +12,9 @@ Methods
 
 ### constant
 
-    :lang<raku> method constant(Str $name --> UInt)
+```raku
+method constant(Str $name --> UInt)
+```
 
 Fontconfig has symbolic constants for numeric properties. For example, in the pattern: `Ariel;weight=bold`, `bold`, evaluates to 200. The `constant()` method can be used to look-up these constants.
 
@@ -23,15 +25,21 @@ Fontconfig has symbolic constants for numeric properties. For example, in the pa
 
 Note that the Raku bindings resolve symbolic constants when a string is assigned to a numeric property. So:
 
-    :lang<raku> $match<weight> = "extrabold";
+```raku
+$match<weight> = "extrabold";
+```
 
 Is equivalent to:
 
-    :lang<raku> $match<weight> = FontConfig.constant("extrabold");
+```raku
+$match<weight> = FontConfig.constant("extrabold");
+```
 
 ### query-ft-face
 
-    :lang<raku> method query-ft-face(Pointer() $face, Str() :$file, UInt :$id --> FontConfig)
+```raku
+method query-ft-face(Pointer() $face, Str() :$file, UInt :$id --> FontConfig)
+```
 
 This method computes a FontConfig pattern based on the attributes of an existing FreeType font. It can be used to discover FontConfig attributes for a specific font.
 
@@ -63,21 +71,29 @@ This class provides am associative interface to [FontConfig properties](https://
 
 Numeric values in the pattern may be set to ranges:
 
-    :lang<raku> $patt<weight> = 195..205;
+```raku
+$patt<weight> = 195..205;
+```
 
 Values may also hold a list, such as a list of font families:
 
-    :lang<raku> $patt<family> = <Arial sans>;
+```raku
+$patt<family> = <Arial sans>;
+```
 
 ### Str
 
 The Str method serializes a pattern to a string representation;
 
-    :lang<raku> say $patt.Str; # Arial,sans:style=italic:weight=205
+```raku
+say $patt.Str; # Arial,sans:style=italic:weight=205
+```
 
 ### version
 
-    :lang<raku> method version returns Version
+```raku
+method version returns Version
+```
 
 This method returns the installed fontconfig library version. Please note that the minimum supported version is `v2.13.1`.
 

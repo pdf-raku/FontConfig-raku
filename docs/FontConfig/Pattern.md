@@ -18,13 +18,17 @@ Methods
 
 ### new
 
-    :lang<raku> method new(*%atts --> FontConfig::Pattern)
+```raku
+method new(*%atts --> FontConfig::Pattern)
+```
 
 Create a new pattern for font matching purposes
 
 ### parse
 
-    :lang<raku> method parse(Str $patt --> FontConfig::Pattern)
+```raku
+method parse(Str $patt --> FontConfig::Pattern)
+```
 
 Create a new pattern from a parsed FontConfig pattern.
 
@@ -41,15 +45,21 @@ This module provides am associative interface to [FontConfig properties](https:/
 
 Numeric values in the pattern may be set to ranges:
 
-    :lang<raku> $patt<weight> = 195..205;
+```raku
+$patt<weight> = 195..205;
+```
 
 Values may also hold a list, such as a list of font families:
 
-    :lang<raku> $patt<family> = <Arial sans>;
+```raku
+$patt<family> = <Arial sans>;
+```
 
 ### match
 
-    :lang<raku> method match(--> FontConfig::Match)
+```raku
+method match(--> FontConfig::Match)
+```
 
 This method returns a FontConfig object for the system font that best matches this pattern.
 
@@ -64,13 +74,17 @@ say 'font file: ' ~ $match<file>;
 
 ### parse
 
-    :lang<raku> method parse(Str $patt --> FontConfig::Pattern)
+```raku
+method parse(Str $patt --> FontConfig::Pattern)
+```
 
 Create a new pattern from a parsed FontConfig pattern.
 
 ### match-series
 
-    :lang<raku> method match(--> FontConfig::Match::Series)
+```raku
+method match(--> FontConfig::Match::Series)
+```
 
 This method returns a series of [FontConfig::Match](https://pdf-raku.github.io/FontConfig-raku/FontConfig/Match) objects ordered by closest match first.
 
