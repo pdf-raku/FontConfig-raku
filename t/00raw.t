@@ -2,11 +2,11 @@ use Test;
 use FontConfig::Raw;
 use FontConfig::Defs :enums;
 
-my FcName $weight = FcName::object('weight');
+my $weight = FcObjectType::get-object-type('weight');
 is $weight.object, 'weight';
 is $weight.type, +FcTypeRange;
 
-my FcName $blah = FcName::object('blah');
+my $blah = FcObjectType::get-object-type('blah');
 is $blah.object, 'blah';
 is $blah.type, +FcTypeUnknown;
 

@@ -11,7 +11,7 @@ note "fontconfig library version: $LibVersion";
 ok $LibVersion >=  $MinVersion, "fontconfig library >= $MinVersion (minimum version)"
     or diag "** The fontconfig version ($LibVersion) is < $MinVersion. This module will not operate normally, or pass tests ***";
 
-my FcName $weight = FcName::object('weight');
+my FcObjectType $weight = FcObjectType::get-object-type('weight');
 is $weight.object, 'weight';
 my FontConfig::Pattern:D $patt .= parse: 'Arial,sans-serif:style=italic';
 ok $patt.pattern.defined;
