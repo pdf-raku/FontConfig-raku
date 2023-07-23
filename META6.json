@@ -14,10 +14,10 @@
   "perl": "6.d",
   "provides": {
     "FontConfig": "lib/FontConfig.rakumod",
+    "FontConfig::Defs": "lib/FontConfig/Defs.rakumod",
     "FontConfig::Match": "lib/FontConfig/Match.rakumod",
     "FontConfig::Match::Series": "lib/FontConfig/Match/Series.rakumod",
     "FontConfig::Pattern": "lib/FontConfig/Pattern.rakumod",
-    "FontConfig::Defs": "lib/FontConfig/Defs.rakumod",
     "FontConfig::Raw": "lib/FontConfig/Raw.rakumod"
   },
   "raku": "6",
@@ -30,5 +30,5 @@
   ],
   "test-depends": [
   ],
-  "version": "0.0.4"
+  "version": "0.1.0"
 }

@@ -2,6 +2,12 @@ Revision history for FontConfig
 
 {{$NEXT}}
 
+0.1.0  2023-07-24T04:13:21+12:00
+    - Added classes FontConfig::Pattern, FontConfig::Match and
+      FontConfig::Match::Series
+    - Missing objects now return specific type. e.g. a missing
+      $patt.aspect returns Num:U instead of Any:U.
+
 0.0.4  2022-04-21T14:32:39+12:00
     - Fix testing and handling of zero pattern matches
     - Added FontConfig.set-config-file() configuration  method
