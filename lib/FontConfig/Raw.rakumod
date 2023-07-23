@@ -11,6 +11,8 @@ class FcObjectSet is repr('CPointer') is export {
     our sub create(--> FcObjectSet) is native($FC-LIB) is symbol('FcObjectSetCreate') {...}
     method add(Str --> FcBool) is native($FC-LIB) is symbol('FcObjectSetAdd') {...}
 }
+
+#| An FcRange holds an integer or numeric range between two values
 class FcRange     is repr('CPointer') {
     our sub create-double(num64, num64 --> FcRange) is native($FC-LIB) is symbol('FcRangeCreateDouble') {...}
     our sub create-integer(int32, int32 --> FcRange) is native($FC-LIB) is symbol('FcRangeCreateInteger') {...}
@@ -23,8 +25,8 @@ class FcRange     is repr('CPointer') {
             !! create-double(.min, .max);
     }
 }
-class FcBinding is repr('CPointer') {}
 
+#| An FcValue object holds a single value with one of a number of different types. The 'type' attribute indicates which member is valid.
 class FcValue is repr('CStruct') is export is rw {
     has int32 $.type;
     class U is repr('CUnion') is rw {
@@ -90,14 +92,22 @@ class FcValue is repr('CStruct') is export is rw {
     }
 }
 
-class FcName is repr('CStruct') is export {
+#| marks the type of a pattern element generated when parsing font names. Applications can add new object types so that font names may contain the new elements.
+class FcObjectType is repr('CStruct') is export {
     has Str $.object;
     has int32 $.type;
 
-    our sub object(Str --> FcName) is native($FC-LIB) is symbol('FcNameGetObjectType') {...}
-    our sub constant(Str, int32 $v is rw --> FcBool) is native($FC-LIB) is symbol('FcNameConstant') {...}
+    our sub get-object-type(Str --> FcObjectType) is native($FC-LIB) is symbol('FcNameGetObjectType') {...}
 }
 
+module FcName is export {
+    our sub constant(Str, int32 $v is rw --> FcBool) is native($FC-LIB) is symbol('FcNameConstant') {...}
+    our sub object(|c) is DEPRECATED<FcObjectType::get-object-type()> {
+        FcObjectType::get-object-type(|c);
+    }
+}
+
+#| An FcPattern holds a set of names with associated value lists; each name refers to a property of a font. FcPatterns are used as inputs to the matching code as well as holding information about specific fonts. Each property can hold one or more values; conventionally all of the same type, although the interface doesn't demand that. An FcPatternIter is used during iteration to access properties in FcPattern.
 class FcPattern is repr('CPointer') is export {
 
     class Iter is repr('CStruct') {
@@ -127,6 +137,7 @@ class FcPattern is repr('CPointer') is export {
     method DESTROY { self!destroy }
 }
 
+#| An FcFontSet contains a list of FcPatterns. Internally fontconfig uses this data structure to hold sets of fonts. Externally, fontconfig returns the results of listing fonts in this format. 'nfont' holds the number of patterns in the 'fonts' array; 'sfont' is used to indicate the size of that array.
 class FcFontSet is repr('CStruct') is export {
     has int32 $.nfont;
     has int32 $.sfont;
@@ -138,6 +149,7 @@ class FcFontSet is repr('CStruct') is export {
     submethod DESTROY { self!destroy }
 }
 
+#| holds a complete configuration of the library; there is one default configuration, other can be constructed from XML data structures. All public entry points that need global data can take an optional FcConfig* argument; passing 0 uses the default configuration. FcConfig objects hold two sets of fonts, the first contains those specified by the configuration, the second set holds those added by the application at run-time. Interfaces that need to reference a particular set use one of the FcSetName enumerated values.
 class FcConfig is repr('CPointer') is export {
     our sub load(--> FcConfig) is native($FC-LIB) is symbol('FcInitLoadConfigAndFonts') {...}
     method substitute(FcPattern, int32 $kind) is native($FC-LIB) is symbol('FcConfigSubstitute') {...};

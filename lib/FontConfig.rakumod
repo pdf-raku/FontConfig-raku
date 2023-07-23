@@ -78,7 +78,7 @@ multi method ASSIGN-KEY(Str() $key, List $vals) {
     $vals;
 }
 
-multi method ASSIGN-KEY(Str() $key, Str:D $name where FcName::object($key).type == FcTypeInteger|FcTypeBool|FcTypeRange) {
+multi method ASSIGN-KEY(Str() $key, Str:D $name where FcObjectType::get-object-type($key).type == FcTypeInteger|FcTypeBool|FcTypeRange) {
     # named numeric constant, e.g. 'bold'
     if FcName::constant($name, my int32 $val) {
         self.ASSIGN-KEY($key, $val)
@@ -162,7 +162,7 @@ method parse(|c) is hidden-from-backtrace is DEPRECATED<FontConfig::Pattern.pars
     (require FontConfig::Pattern).parse: |c;
 }
 
-multi method FALLBACK(FontConfig:D: $prop where FcName::object($prop).type != FcTypeUnknown) is rw {
+multi method FALLBACK(FontConfig:D: $prop where FcObjectType::get-object-type($prop).type != FcTypeUnknown) is rw {
     Proxy.new(
         FETCH => { self.AT-KEY($prop); },
         STORE => -> $, $v is raw { self.ASSIGN-KEY($prop, $v) }
