@@ -4,9 +4,11 @@ unit module FontConfig::Raw;
 use FontConfig::Defs :$FC-LIB, :$FC-BIND-LIB, :$types, :enums;
 use NativeCall;
 
-class FcMatrix    is repr('CPointer') {}
+class FcMatrix    is repr('CStruct') is export {
+    has num64 ($.xx, $.xy, $.yx, $.yy);
+}
 class FcCharSet   is repr('CPointer') is export {}
-class FcLangSet   is repr('CPointer') {}
+class FcLangSet   is repr('CPointer') is export {}
 class FcObjectSet is repr('CPointer') is export {
     our sub create(--> FcObjectSet) is native($FC-LIB) is symbol('FcObjectSetCreate') {...}
     method add(Str --> FcBool) is native($FC-LIB) is symbol('FcObjectSetAdd') {...}

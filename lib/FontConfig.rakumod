@@ -141,7 +141,7 @@ my constant %PropTypes = %(
     :foundry(Str), :ftface(Pointer), :fullname(Str),
     :fullnamelang(Str), :globaladvance(Bool), :hash(Str),
     :hinting(Bool), :hintstyle(Int), :index(Int), :lang(Str),
-    :lcdfilter(Int), :minspace(Bool), :namelang(Str), :outline(Bool),
+    :lcdfilter(Int), :matrix(FcMatrix), :minspace(Bool), :namelang(Str), :outline(Bool),
     :pixelsize(Num), :postscriptname(Str), :prgname(Str),
     :rasterizer(Str), :rgba(Int), :scalable(Bool), :scale(Num),
     :size(Range), :slant(Int), :source(Str), :spacing(Int),
