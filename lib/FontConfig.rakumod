@@ -183,29 +183,29 @@ L<FontConfig> is the base class for L<FontConfig::Pattern> (queries) and L<FontC
 
 =head2 Font Properties
 
-Common fonr properties inclide:
+Common font properties include:
 
 =begin table
-Field | Values | Constants | Description
-========================================
-antialias | Bool | | Whether glyphs can be antialiased
-charset | CharSet | | Font characters
-color | Bool | | Whether any glyphs have color
-family | Str | | Font family names
-file | Str | | The filename holding the font
-fontformat | Str | | E.g. 'CFF', 'TrueType', 'Type 1'
-fontversion | Int | | Version number of the font
-hinting | Bool | | Whether the rasterizer uses hinting
-outline | Bool | | Whether the glyphs are outlines
-pixelsize | Num | | Supported pixel sizes
-postscriptname | Str | | Font postscript name
-scalable | Bool | | Whether glyphs can be scaled
+Field | Values / Constants | Description
+====================================
+antialias | Bool | Whether glyphs can be antialiased
+charset | CharSet | Font characters
+color | Bool | Whether any glyphs have color
+family | Str | Font family names
+file | Str | The filename holding the font
+fontformat | Str | E.g. 'CFF', 'TrueType', 'Type 1'
+fontversion | Int | Version number of the font
+hinting | Bool | Whether the rasterizer uses hinting
+outline | Bool | Whether the glyphs are outlines
+pixelsize | Num | Supported pixel sizes
+postscriptname | Str | Font postscript name
+scalable | Bool | Whether glyphs can be scaled
 size | Range | Supported font sizes
-slant | Int | roman=0, italic=100, oblique=110 |
-spacing | Int | proportional=0, dual=90, mono=100, charcell=110 |
-style | Str | | Font style. Overrides weight and slant
-weight | thin=0, extralight=40, ultralight=40, light=50 demilight=55 book=70 regular=80 normal=80 medium=100 demibold=180 bold=200 extrabold=205 black=210 extrablack=215
-width | ultracondensed=50, extracondensed=63, condensed=75, semicondensed=87, normal=100, semiexpanded=113, expanded=125, extraexpanded=150, ultraexpanded=200 |
+slant | Int / roman=0, italic=100, oblique=110 | Font slant
+spacing | Int | proportional=0, dual=90, mono=100, charcell=110 | Spacing between glypjs
+style | Str | Font style. Overrides weight and slant
+weight | Int / thin=0, extralight=40, ultralight=40, light=50 demilight=55 book=70 regular=80 normal=80 medium=100 demibold=180 bold=200 extrabold=205 black=210 extrablack=215 | Font weight
+width | Int / ultracondensed=50, extracondensed=63, condensed=75, semicondensed=87, normal=100, semiexpanded=113, expanded=125, extraexpanded=150, ultraexpanded=200 |
 =end table
 
 For more properties, see [FontConfig properties](https://www.freedesktop.org/software/fontconfig/fontconfig-user.html).

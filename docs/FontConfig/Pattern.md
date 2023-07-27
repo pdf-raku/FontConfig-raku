@@ -11,21 +11,12 @@ FontConfig patterns and searching
 Description
 -----------
 
-A pattern is used for font matching. The following fields are commonly used for matching
-
-<table class="pod-table">
-<thead><tr>
-<th>Field</th> <th>Values</th> <th>Constants</th> <th>Description</th>
-</tr></thead>
-<tbody>
-<tr> <td>file</td> <td>Str</td> <td>| The filename holding the font</td> <td></td> </tr> <tr> <td>family</td> <td>Str</td> <td>| Font family names</td> <td></td> </tr> <tr> <td>scalable</td> <td>Bool</td> <td>| Whether glyphs can be scaled</td> <td></td> </tr> <tr> <td>color</td> <td>Bool</td> <td>| Whether any glyphs have color</td> <td></td> </tr> <tr> <td>charset</td> <td>CharSet</td> <td>| Font characters</td> <td></td> </tr> <tr> <td>postscriptname</td> <td>Str</td> <td>| Font postscript name</td> <td></td> </tr> <tr> <td>spacing</td> <td>Int</td> <td>proportional=0, dual=90, mono=100, charcell=110</td> <td></td> </tr> <tr> <td>size</td> <td>Range</td> <td>Supported font sizes</td> <td></td> </tr> <tr> <td>pixelsize</td> <td>Num</td> <td>| Supported pixel sizes</td> <td></td> </tr> <tr> <td>style</td> <td>Str</td> <td>| Font style. Overrides weight and slant</td> <td></td> </tr> <tr> <td>slant</td> <td>Int</td> <td>roman=0, italic=100, oblique=110</td> <td></td> </tr> <tr> <td>weight</td> <td>thin=0, extralight=40, ultralight=40, light=50 demilight=55 book=70 regular=80 normal=80 medium=100 demibold=180 bold=200 extrabold=205 black=210 extrablack=215</td> <td></td> <td></td> </tr> <tr> <td>width</td> <td>ultracondensed=50, extracondensed=63, condensed=75, semicondensed=87, normal=100, semiexpanded=113, expanded=125, extraexpanded=150, ultraexpanded=200</td> <td></td> <td></td> </tr> <tr> <td>antialias</td> <td>Bool</td> <td>|</td> <td></td> </tr> <tr> <td>outline</td> <td>Bool</td> <td>| Whether the glyphs are outlines</td> <td></td> </tr> <tr> <td>fontversion</td> <td>Int</td> <td>|</td> <td></td> </tr> <tr> <td>fontformat</td> <td>Str</td> <td>| E.g. &#39;CFF&#39;, &#39;TrueType&#39;, &#39;Type 1&#39;</td> <td></td> </tr>
-</tbody>
-</table>
-
-This class inherits from [FontConfig](https://pdf-raku.github.io/FontConfig-raku/FontConfig) and has all its methods available.
+This class represents an input pattern for font matching.
 
 Methods
 -------
+
+This class inherits from [FontConfig](https://pdf-raku.github.io/FontConfig-raku/FontConfig) and has all its methods available.
 
 ### new
 
