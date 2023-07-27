@@ -7,6 +7,24 @@ Description
 
 [FontConfig](https://pdf-raku.github.io/FontConfig-raku/FontConfig) is the base class for [FontConfig::Pattern](https://pdf-raku.github.io/FontConfig-raku/FontConfig/Pattern) (queries) and [FontConfig::Match](https://pdf-raku.github.io/FontConfig-raku/FontConfig/Match) (matches).
 
+Font Properties
+---------------
+
+Common fonr properties inclide:
+
+<table class="pod-table">
+<thead><tr>
+<th>Field</th> <th>Values</th> <th>Constants</th> <th>Description</th>
+</tr></thead>
+<tbody>
+<tr> <td>antialias</td> <td>Bool</td> <td>| Whether glyphs can be antialiased</td> <td></td> </tr> <tr> <td>charset</td> <td>CharSet</td> <td>| Font characters</td> <td></td> </tr> <tr> <td>color</td> <td>Bool</td> <td>| Whether any glyphs have color</td> <td></td> </tr> <tr> <td>family</td> <td>Str</td> <td>| Font family names</td> <td></td> </tr> <tr> <td>file</td> <td>Str</td> <td>| The filename holding the font</td> <td></td> </tr> <tr> <td>fontformat</td> <td>Str</td> <td>| E.g. &#39;CFF&#39;, &#39;TrueType&#39;, &#39;Type 1&#39;</td> <td></td> </tr> <tr> <td>fontversion</td> <td>Int</td> <td>| Version number of the font</td> <td></td> </tr> <tr> <td>hinting</td> <td>Bool</td> <td>| Whether the rasterizer uses hinting</td> <td></td> </tr> <tr> <td>outline</td> <td>Bool</td> <td>| Whether the glyphs are outlines</td> <td></td> </tr> <tr> <td>pixelsize</td> <td>Num</td> <td>| Supported pixel sizes</td> <td></td> </tr> <tr> <td>postscriptname</td> <td>Str</td> <td>| Font postscript name</td> <td></td> </tr> <tr> <td>scalable</td> <td>Bool</td> <td>| Whether glyphs can be scaled</td> <td></td> </tr> <tr> <td>size</td> <td>Range</td> <td>Supported font sizes</td> <td></td> </tr> <tr> <td>slant</td> <td>Int</td> <td>roman=0, italic=100, oblique=110</td> <td></td> </tr> <tr> <td>spacing</td> <td>Int</td> <td>proportional=0, dual=90, mono=100, charcell=110</td> <td></td> </tr> <tr> <td>style</td> <td>Str</td> <td>| Font style. Overrides weight and slant</td> <td></td> </tr> <tr> <td>weight</td> <td>thin=0, extralight=40, ultralight=40, light=50 demilight=55 book=70 regular=80 normal=80 medium=100 demibold=180 bold=200 extrabold=205 black=210 extrablack=215</td> <td></td> <td></td> </tr> <tr> <td>width</td> <td>ultracondensed=50, extracondensed=63, condensed=75, semicondensed=87, normal=100, semiexpanded=113, expanded=125, extraexpanded=150, ultraexpanded=200</td> <td></td> <td></td> </tr>
+</tbody>
+</table>
+
+For more properties, see [FontConfig properties](https://www.freedesktop.org/software/fontconfig/fontconfig-user.html).
+
+FontConfig command-line toos such as [fc-query](https://linux.die.net/man/1/fc-query) and [fc-match](https://linux.die.net/man/1/fc-match) can be used to query fonts and properties.
+
 Methods
 -------
 
