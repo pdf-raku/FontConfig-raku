@@ -202,7 +202,7 @@ postscriptname | Str | Font postscript name
 scalable | Bool | Whether glyphs can be scaled
 size | Range | Supported font sizes
 slant | Int / roman=0, italic=100, oblique=110 | Font slant
-spacing | Int | proportional=0, dual=90, mono=100, charcell=110 | Spacing between glypjs
+spacing | Int / proportional=0, dual=90, mono=100, charcell=110 | Spacing between glyphs
 style | Str | Font style. Overrides weight and slant
 weight | Int / thin=0, extralight=40, ultralight=40, light=50 demilight=55 book=70 regular=80 normal=80 medium=100 demibold=180 bold=200 extrabold=205 black=210 extrablack=215 | Font weight
 width | Int / ultracondensed=50, extracondensed=63, condensed=75, semicondensed=87, normal=100, semiexpanded=113, expanded=125, extraexpanded=150, ultraexpanded=200 |
