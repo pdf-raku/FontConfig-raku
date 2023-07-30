@@ -188,30 +188,38 @@ Common font properties include:
 =begin table
 Field | Values / Constants | Description
 ====================================
-antialias | Bool | Whether glyphs can be antialiased
-charset | CharSet | Font characters
-color | Bool | Whether any glyphs have color
 family | Str | Font family names
+familylang | Str | Languages corresponding to each family
+style | Str | Font style. Overrides weight and slant
+stylelang | Str | Languages correspondig to each style
+fullname | Str |  Font full names (often includes style)
+fullnamelang| Str |  Languages corresponding to each fullname
+slant | Int / roman=0, italic=100, oblique=110 | Slant of glyphs
+weight | Int / thin=0, extralight=40, ultralight=40, light=50 demilight=55 book=70 regular=80 normal=80 medium=100 demibold=180 bold=200 extrabold=205 black=210 extrablack=215 | Weight of glyphs
+size | Range | Point size
+width | Int / ultracondensed=50, extracondensed=63, condensed=75, semicondensed=87, normal=100, semiexpanded=113, expanded=125, extraexpanded=150, ultraexpanded=200 | Width of glyphs
+pixelsize | Num | Pixel size
+spacing | Int / proportional=0, dual=90, mono=100, charcell=110 | Spacing between glyphs
+foundry | Str | Font foundry name
+antialias | Bool | Whether glyphs can be antialiased
+hinting | Bool | Whether the rasterizer uses hinting
 file | Str | The filename holding the font
+outline | Bool | Whether the glyphs are outlines
+charset | CharSet | Unicode chars encoded by the font
+color | Bool | Whether any glyphs have color
 fontformat | Str | E.g. 'CFF', 'TrueType', 'Type 1'
 fontversion | Int | Version number of the font
-hinting | Bool | Whether the rasterizer uses hinting
-outline | Bool | Whether the glyphs are outlines
-pixelsize | Num | Supported pixel sizes
 postscriptname | Str | Font postscript name
 scalable | Bool | Whether glyphs can be scaled
-size | Range | Supported font sizes
-slant | Int / roman=0, italic=100, oblique=110 | Slant of glyphs
-spacing | Int / proportional=0, dual=90, mono=100, charcell=110 | Spacing between glyphs
-style | Str | Font style. Overrides weight and slant
-weight | Int / thin=0, extralight=40, ultralight=40, light=50 demilight=55 book=70 regular=80 normal=80 medium=100 demibold=180 bold=200 extrabold=205 black=210 extrablack=215 | Weight of glyphs
-width | Int / ultracondensed=50, extracondensed=63, condensed=75, semicondensed=87, normal=100, semiexpanded=113, expanded=125, extraexpanded=150, ultraexpanded=200 | Width of glyphs
 =end table
 
-For more properties, see [FontConfig properties](https://www.freedesktop.org/software/fontconfig/fontconfig-user.html).
+The full list of properties is extensive and implementation dependant. For more properties,
 
-FontConfig command-line toos such as [fc-query](https://linux.die.net/man/1/fc-query) and [fc-match](https://linux.die.net/man/1/fc-match) can
-be used to query fonts and properties.
+=item see [FontConfig properties](https://www.freedesktop.org/software/fontconfig/fontconfig-user.html), which listsmany properties.
+
+=item The C<query-info> method returns a pattern with all suported properties for a given face
+
+=item FontConfig command-line tools such as [fc-query](https://linux.die.net/man/1/fc-query) and [fc-match](https://linux.die.net/man/1/fc-match) can be used to query fonts and properties.
 
 =head2 Methods
 
