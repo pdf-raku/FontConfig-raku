@@ -9,6 +9,7 @@ use FontConfig::Raw;
 has FontConfig::Pattern:D $.pat is required;
 has FcFontSet:D $.set .= new;
 has Bool:D $.trim = False;
+has UInt $.limit;
 
 method elems { $!set.nfont }
 
@@ -19,21 +20,25 @@ multi method AT-POS(UInt:D $i where $i < $!set.nfont --> FontConfig::Match) {
 
 multi method AT-POS(UInt:D) { FontConfig::Match }
 
-method iterator(::?CLASS:D $set:) {
+method iterator(::?CLASS:D $set:) handles<Seq List Array> {
     class iterator does Iterator {
         has uint $.i = 0;
         has FontConfig::Match::Series:D $.set is required;
+        has uint $!n = $!set.elems;
+
+        submethod TWEAK(UInt :$limit) {
+            with $limit {
+                $!n = $_ if $_ < $!n;
+            }
+        }
+
         method pull-one {
-            $!i >= $!set.elems
+            $!i >= $!n
                ?? IterationEnd
                !! $!set.AT-POS($!i++);
         }
     }
-    iterator.new: :$set;
-}
-
-method Seq handles<List Array> {
-    (^$.elems).map: {$.AT-POS: $_}
+    iterator.new: :$set, :$!limit;
 }
 
 method parse(Str:D $query, |c) {
@@ -44,10 +49,10 @@ method parse(Str:D $query, |c) {
     self.match: $pat, |c;
 }
 
-multi method match(FontConfig::Pattern:D $pat, Bool :$trim = False) {
+method match(FontConfig::Pattern:D $pat, Bool :$trim = False, |c) {
     my int32 $result-type;
     my FcFontSet $set = $pat.configure.font-sort($pat.pattern, $trim, FcCharSet, $result-type);
-    self.new: :$pat, :$set;
+    self.new: :$pat, :$set, |c;
 }
 
 =begin pod

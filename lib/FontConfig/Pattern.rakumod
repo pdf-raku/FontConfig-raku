@@ -24,7 +24,7 @@ method match(::?CLASS:D $pattern is copy:) {
     }
 }
 
-method match-series(::?CLASS:D $pattern: |c) handles <Seq List Array iterator> {
+method match-series(::?CLASS:D $pattern: |c) handles <iterator> {
     (require ::('FontConfig::Match::Series')).match($pattern, |c);
 }
 
@@ -103,10 +103,13 @@ Create a new pattern from a parsed FontConfig pattern.
 =head3 match-series
 
 =for code :lang<raku>
-method match(--> FontConfig::Match::Series)
+method match(UInt :$limit, --> FontConfig::Match::Series)
 
 This method returns a series of L<FontConfig::Match> objects ordered by 
 closest match first.
+
+This method sorted, but does not filter the list of available fonts. The `$limit`
+option can be used to limit the maximum numbe of fonts returned.
 
 =end pod
 
