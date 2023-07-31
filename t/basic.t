@@ -24,7 +24,6 @@ is-deeply $patt.weight, 200;
 $patt.weight = 200..210;
 is-deeply $patt.weight, 200..210;
 is-deeply $patt.aspect, Num;
-warn $patt.matrix.raku;
 
 is-deeply $patt.keys.sort, ("family", "style", "weight");
 is $patt<style>, 'italic';
