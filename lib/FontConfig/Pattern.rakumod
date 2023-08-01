@@ -109,7 +109,7 @@ This method returns a series of L<FontConfig::Match> objects ordered by
 closest match first.
 
 This method sorted, but does not filter the list of available fonts. The `$limit`
-option can be used to limit the maximum numbe of fonts returned.
+option can be used to limit the maximum number of fonts returned.
 
 =end pod
 

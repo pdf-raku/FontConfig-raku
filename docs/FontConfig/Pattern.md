@@ -90,5 +90,5 @@ method match(UInt :$limit, --> FontConfig::Match::Series)
 
 This method returns a series of [FontConfig::Match](https://pdf-raku.github.io/FontConfig-raku/FontConfig/Match) objects ordered by closest match first.
 
-This method sorted, but does not filter the list of available fonts. The `$limit` option can be used to limit the maximum numbe of fonts returned.
+This method sorted, but does not filter the list of available fonts. The `$limit` option can be used to limit the maximum number of fonts returned.
 
