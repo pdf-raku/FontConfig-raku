@@ -129,7 +129,7 @@ method Hash handles<keys values pairs EXISTS-KEY>{
             }
         } while $!pattern.iter-next: $iter;
 
-        for %!store.keys.grep({.ends-with("lang") and .chars > 4}).sort -> $lang-prop {
+        for %!store.keys.grep({.ends-with("lang") and .chars > 4}) -> $lang-prop {
             my $base-prop = $lang-prop.substr(0, *-4);
             my %map;
             for %!store{$lang-prop}.pairs {

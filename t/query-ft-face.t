@@ -26,6 +26,8 @@ subtest 'query-ft-face() pattern attributes', {
     ) {
         is-deeply $patt{.key}, .value, "pattern '$_' attribute";
     }
+    is-deeply $patt<stylelang><en>, ['Roman'];
+    is-deeply $patt<familylang><en>, ['Bitstream Vera Sans'];
 }
     
 my FontConfig::Match $match;
