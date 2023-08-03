@@ -1,5 +1,5 @@
 # Base class for FontConfig Patterns and Matches
-unit class FontConfig:ver<0.1.2>;
+unit class FontConfig:ver<0.1.3>;
 
 use FontConfig::Raw;
 use FontConfig::Defs :enums;
@@ -200,7 +200,7 @@ Field | Values / Constants | Description
 family | Str | Font family names
 familylang | Hash | Family names by language code
 style | Str | Font style. Overrides weight and slant
-stylelang | Str | Languages correspondig to each style
+stylelang | Str | Styles by language code
 fullname | Str |  Font full names (often includes style)
 fullnamelang| Hash |  Fullnames by language code
 slant | Int / roman=0, italic=100, oblique=110 | Slant of glyphs

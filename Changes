@@ -2,6 +2,10 @@ Revision history for FontConfig
 
 {{$NEXT}}
 
+0.1.3  2023-08-03T12:44:50+12:00
+    - Turn familylang, stylelang, fullnamelang, namelang into
+      Hash maps by language code
+
 0.1.2  2023-08-03T08:56:13+12:00
     - Add :$limit option to series
     - Fix series iterator
