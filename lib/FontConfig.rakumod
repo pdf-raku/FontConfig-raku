@@ -128,6 +128,15 @@ method Hash handles<keys values pairs EXISTS-KEY>{
                 %!store{$key} = @values;
             }
         } while $!pattern.iter-next: $iter;
+
+        for %!store.keys.grep({.ends-with("lang") and .chars > 4}).sort -> $lang-prop {
+            my $base-prop = $lang-prop.substr(0, *-4);
+            my %map;
+            for %!store{$lang-prop}.pairs {
+                %map{.value}.push: %!store{$base-prop}[.key];
+            }
+            %!store{$lang-prop} = %map;
+        }
     }
     %!store;
 }
@@ -136,16 +145,16 @@ my constant %PropTypes = %(
     :antialias(Bool), :aspect(Num), :autohint(Bool), :capability(Str),
     :charset(FcCharSet), :color(Bool), :decorative(Bool), :dpi(Num),
     :embeddedbitmap(Bool), :embolden(Bool), :family(Str),
-    :familylang(Str), :file(Str), :fontfeatures(Str),
+    :familylang(Hash), :file(Str), :fontfeatures(Str),
     :fontformat(Str), :fontvariations(Str), :fontversion(Int),
     :foundry(Str), :ftface(Pointer), :fullname(Str),
-    :fullnamelang(Str), :globaladvance(Bool), :hash(Str),
+    :fullnamelang(Hash), :globaladvance(Bool), :hash(Str),
     :hinting(Bool), :hintstyle(Int), :index(Int), :lang(Str),
-    :lcdfilter(Int), :matrix(FcMatrix), :minspace(Bool), :namelang(Str), :outline(Bool),
+    :lcdfilter(Int), :matrix(FcMatrix), :minspace(Bool), :namelang(Hash), :outline(Bool),
     :pixelsize(Num), :postscriptname(Str), :prgname(Str),
     :rasterizer(Str), :rgba(Int), :scalable(Bool), :scale(Num),
     :size(Range), :slant(Int), :source(Str), :spacing(Int),
-    :style(Str), :stylelang(Str), :symbol(Bool), :variable(Bool),
+    :style(Str), :stylelang(Hash), :symbol(Bool), :variable(Bool),
     :verticallayout(Bool), :weight(Int), :width(Int)
 );
 
@@ -189,11 +198,11 @@ Common font properties include:
 Field | Values / Constants | Description
 ====================================
 family | Str | Font family names
-familylang | Str | Languages corresponding to each family
+familylang | Hash | Family names by language code
 style | Str | Font style. Overrides weight and slant
 stylelang | Str | Languages correspondig to each style
 fullname | Str |  Font full names (often includes style)
-fullnamelang| Str |  Languages corresponding to each fullname
+fullnamelang| Hash |  Fullnames by language code
 slant | Int / roman=0, italic=100, oblique=110 | Slant of glyphs
 weight | Int / thin=0, extralight=40, ultralight=40, light=50 demilight=55 book=70 regular=80 normal=80 medium=100 demibold=180 bold=200 extrabold=205 black=210 extrablack=215 | Weight of glyphs
 size | Range | Point size
