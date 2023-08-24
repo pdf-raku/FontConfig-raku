@@ -1,6 +1,7 @@
 Revision history for FontConfig
 
 {{$NEXT}}
+   - Rename :$limit option to :$best on pattern matches
 
 0.1.3  2023-08-03T12:44:50+12:00
     - Turn familylang, stylelang, fullnamelang, namelang into

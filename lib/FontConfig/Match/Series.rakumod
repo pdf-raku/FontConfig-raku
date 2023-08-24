@@ -9,9 +9,18 @@ use FontConfig::Raw;
 has FontConfig::Pattern:D $.pat is required;
 has FcFontSet:D $.set .= new;
 has Bool:D $.trim = False;
-has UInt $.limit;
+has UInt $.best;
 
-method elems { $!set.nfont }
+submethod TWEAK(UInt :$limit) {
+    with $limit {
+        ## warn ':limit is deprecated, please use :best';
+        $!best //= $limit;
+    }
+}
+
+method elems {
+    min($!set.nfont, $!best.Int // Inf);
+}
 
 multi method AT-POS(UInt:D $i where $i < $!set.nfont --> FontConfig::Match) {
     my FcPattern:D $pattern = $!pat.configure.render-prepare: $!pat.pattern, $!set.fonts[$i];
@@ -26,8 +35,8 @@ method iterator(::?CLASS:D $set:) handles<Seq List Array> {
         has FontConfig::Match::Series:D $.set is required;
         has uint $!n = $!set.elems;
 
-        submethod TWEAK(UInt :$limit) {
-            with $limit {
+        submethod TWEAK(UInt :$best) {
+            with $best {
                 $!n = $_ if $_ < $!n;
             }
         }
@@ -38,7 +47,8 @@ method iterator(::?CLASS:D $set:) handles<Seq List Array> {
                !! $!set.AT-POS($!i++);
         }
     }
-    iterator.new: :$set, :$!limit;
+
+    iterator.new: :$set, :$!best;
 }
 
 method parse(Str:D $query, |c) {
@@ -62,9 +72,9 @@ method match(FontConfig::Pattern:D $pat, Bool :$trim = False, |c) {
 =begin code :lang<raku>
 use FontConfig::Match::Series;
 my $n = 0;
-my $limit = 10;
-say "$limit best match fonts:";
-for FontConfig::Match::Series.parse('Arial,sans:style<italic>', :$limit) -> FontConfig::Match $match {
+my $best = 10;
+say "$best best match fonts:";
+for FontConfig::Match::Series.parse('Arial,sans:style<italic>', :$best) -> FontConfig::Match $match {
     say (++$n)~ $match.format(':%{fullname}: %{file} (%{fontformat})');
 }
 =end code

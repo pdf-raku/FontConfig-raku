@@ -1,5 +1,5 @@
 use Test;
-plan 7;
+plan 11;
 use FontConfig;
 use FontConfig::Pattern;
 use FontConfig::Match;
@@ -32,6 +32,19 @@ subtest 'second match', {
 $series .= parse: 'Arial,sans-serif', :trim;
 
 is $series.elems, 1, 'trim series elems';
+
+subtest 'first trim match', {
+    given $series[0] {
+        is .<family>, 'Bitstream Vera Sans', 'family';
+        is .<style>, 'Roman', 'style';
+        is .<file>.IO.relative, 't/fonts/Vera.ttf', 'file';
+    }
+}
+
+nok $series.best, ':!best';
+$series .= parse: 'Arial,sans-serif', :best;
+ok $series.best, ':best';
+is $series.elems, 1, ':best series elems';
 
 subtest 'first trim match', {
     given $series[0] {

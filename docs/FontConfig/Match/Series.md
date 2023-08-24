@@ -15,9 +15,9 @@ Synopsis
 ```raku
 use FontConfig::Match::Series;
 my $n = 0;
-my $limit = 10;
-say "$limit best match fonts:";
-for FontConfig::Match::Series.parse('Arial,sans:style<italic>', :$limit) -> FontConfig::Match $match {
+my $best = 10;
+say "$best best match fonts:";
+for FontConfig::Match::Series.parse('Arial,sans:style<italic>', :$best) -> FontConfig::Match $match {
     say (++$n)~ $match.format(':%{fullname}: %{file} (%{fontformat})');
 }
 ```
