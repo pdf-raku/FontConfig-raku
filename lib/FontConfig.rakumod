@@ -1,5 +1,5 @@
 # Base class for FontConfig Patterns and Matches
-unit class FontConfig:ver<0.1.3>;
+unit class FontConfig:ver<0.1.4>;
 
 use FontConfig::Raw;
 use FontConfig::Defs :enums;
