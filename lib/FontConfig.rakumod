@@ -224,7 +224,7 @@ scalable | Bool | Whether glyphs can be scaled
 
 The full list of properties is extensive and implementation dependant. For more properties,
 
-=item see [FontConfig properties](https://www.freedesktop.org/software/fontconfig/fontconfig-user.html), which listsmany properties.
+=item see [FontConfig properties](https://www.freedesktop.org/software/fontconfig/fontconfig-user.html), which lists many properties.
 
 =item The C<query-info> method returns a pattern with all suported properties for a given face
 

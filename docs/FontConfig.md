@@ -23,7 +23,7 @@ Common font properties include:
 
 The full list of properties is extensive and implementation dependant. For more properties,
 
-  * see [FontConfig properties](https://www.freedesktop.org/software/fontconfig/fontconfig-user.html), which listsmany properties.
+  * see [FontConfig properties](https://www.freedesktop.org/software/fontconfig/fontconfig-user.html), which lists many properties.
 
   * The `query-info` method returns a pattern with all suported properties for a given face
 

@@ -16,7 +16,7 @@ Synopsis
 use FontConfig::Match::Series;
 my $n = 0;
 my $best = 10;
-say "$best best match fonts:";
+say "The $best best matching fonts are:";
 for FontConfig::Match::Series.parse('Arial,sans:style<italic>', :$best) -> FontConfig::Match $match {
     say (++$n)~ $match.format(':%{fullname}: %{file} (%{fontformat})');
 }
