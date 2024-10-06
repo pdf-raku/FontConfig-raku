@@ -24,11 +24,11 @@
   "resources": [
     "libraries/fc_raku"
   ],
-  "source-url": "git://github.com/pdf-raku/FontConfig-raku.git",
+  "source-url": "https://github.com/pdf-raku/FontConfig-raku.git",
   "tags": [
     "font"
   ],
   "test-depends": [
   ],
-  "version": "0.1.4"
+  "version": "0.1.5"
 }
