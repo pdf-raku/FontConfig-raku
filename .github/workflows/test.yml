@@ -31,7 +31,7 @@ jobs:
       - name: Install Libraries (MacOS)
         if: contains(matrix.os, 'macOS')
         run: |
-          brew reinstall homebrew
+          brew reinstall fontconfig
       - name: Install Dependencies
         run: |
           zef install --/test App::Prove6
