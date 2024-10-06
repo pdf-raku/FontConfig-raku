@@ -1,6 +1,8 @@
 Revision history for FontConfig
 
 {{$NEXT}}
+   - Filter :all, & :best options from FontConfig base class.
+     These are used by FontConfig::Pattern derived class
 
 0.1.4  2023-08-25T07:01:21+12:00
    - Rename :$limit option to :$best on pattern matches. Make
