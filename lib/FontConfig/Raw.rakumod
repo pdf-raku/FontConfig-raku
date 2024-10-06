@@ -79,10 +79,18 @@ class FcValue is repr('CStruct') is export is rw {
     }
     multi method store(Pointer $f, :$!type = FcTypeFTFace ) { $!u.TWEAK(:$f) }
     multi method store($_) { fail "don't know how to set FcValue to {.WHAT.raku}"; }
-    multi method COERCE($v) {
+    multi method COERCE(Any:D $v) {
         my $obj = self.new;
         $obj.store($v);
         $obj;
+    }
+    multi method COERCE(Any:U $_) {
+        when Str     { FcTypeString }
+        when Bool    { FcTypeBool }
+        when Int     { FcTypeInteger }
+        when Numeric { FcTypeDouble }
+        when Range   { FcTypeRange }
+        default      { FcTypeUnknown }
     }
     method CALL-ME is rw {
         Proxy.new(

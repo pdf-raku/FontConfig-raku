@@ -12,7 +12,7 @@ has FcPattern:D $.pattern handles<elems format Str> = FcPattern::create();
 has Bool $.configured is built;
 has %!store;
 
-submethod TWEAK(:$configure, :pattern($), *%props) {
+submethod TWEAK(:$configure, :pattern($), :all($), :best($), *%props) {
     self.configure if $configure;
     self{.key} = .value for %props;
 }
