@@ -23,6 +23,7 @@ subtest 'query-ft-face() pattern attributes', {
         :postscriptname<BitstreamVeraSans-Roman>,
         :outline(True), :scalable(True), :slant(0), :style<Roman>,
         :weight(80e0), :width(100e0),
+        :index(0),
     ) {
         is-deeply $patt{.key}, .value, "pattern '$_' attribute";
     }
