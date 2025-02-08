@@ -34,9 +34,8 @@ jobs:
           brew reinstall fontconfig
       - name: Install Dependencies
         run: |
-          zef install --/test App::Prove6
           zef install --/test LibraryMake
           zef install --deps-only .
           zef build .
       - name: Run Tests
-        run: prove6 -I. t
+        run: zef install .
