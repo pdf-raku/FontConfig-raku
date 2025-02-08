@@ -27,7 +27,7 @@ jobs:
           raku-version: ${{ matrix.raku-version }}
       - name: Install Libraries (Linux)
         if: contains(matrix.os, 'ubuntu')
-        run: sudo apt-get install -y libfontconfig-dev
+        run: sudo apt-get install -y libfontconfig1-dev
       - name: Install Libraries (MacOS)
         if: contains(matrix.os, 'macOS')
         run: |
