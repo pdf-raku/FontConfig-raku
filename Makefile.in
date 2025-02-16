@@ -15,7 +15,7 @@ debug :
 lib : $(TGT)
 
 $(TGT) : $(SRC)%O%
-	%LD% %LDSHARED% %LIBS% %LDFLAGS% %LDOUT%$(TGT) $(SRC)%O%
+	%LD% %LIB-LDFLAGS% %LDSHARED% %LIBS% %LDFLAGS% %LDOUT%$(TGT) $(SRC)%O%
 
 $(SRC)%O% : $(SRC).c $(SRC).h
 	%CC% -I $(DIR) %LIB-CFLAGS% -c %CCSHARED% %CCFLAGS% %CCOUT%$(SRC)%O% $(SRC).c
