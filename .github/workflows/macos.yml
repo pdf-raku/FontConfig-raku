@@ -13,9 +13,7 @@ jobs:
     strategy:
       matrix:
         os:
-          - ubuntu-latest
           - macOS-latest
-          #- windows-latest
         raku-version:
           - 'latest'
           - '2021.10'
@@ -25,11 +23,7 @@ jobs:
       - uses: Raku/setup-raku@v1
         with:
           raku-version: ${{ matrix.raku-version }}
-      - name: Install Libraries (Linux)
-        if: contains(matrix.os, 'ubuntu')
-        run: sudo apt-get install -y libfontconfig1-dev
       - name: Install Libraries (MacOS)
-        if: contains(matrix.os, 'macOS')
         run: |
           brew reinstall fontconfig
       - name: Install Dependencies
