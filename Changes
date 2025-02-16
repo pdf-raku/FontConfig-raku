@@ -2,6 +2,10 @@ Revision history for FontConfig
 
 {{$NEXT}}
 
+0.1.6  2025-02-17T08:25:13+13:00
+   - Fix C include, use ' instead of <> #7
+   - Fix library resolution MacOS
+
 0.1.5  2024-10-07T07:15:18+13:00
    - Filter :all, & :best options from FontConfig base class.
      These are used by FontConfig::Pattern derived class
