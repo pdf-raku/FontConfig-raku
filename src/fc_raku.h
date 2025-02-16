@@ -7,7 +7,7 @@
 #define DLLEXPORT extern
 #endif
 
-#include <fontconfig/fontconfig.h>
+#include "fontconfig/fontconfig.h"
 
 DLLEXPORT FcBool fc_raku_pattern_add (FcPattern *p, const char *object, FcValue *value, FcBool append);
 
