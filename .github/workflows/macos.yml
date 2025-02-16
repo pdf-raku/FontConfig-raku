@@ -17,8 +17,6 @@ jobs:
         raku-version:
           - 'latest'
           - '2021.10'
-        env:
-          LD_LIBRARY_PATH: /opt/homebrew/opt/fontconfig/lib
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v2
@@ -34,4 +32,6 @@ jobs:
           zef install --deps-only .
           raku Build.pm6 -I /opt/homebrew/opt/fontconfig/include -L /opt/homebrew/opt/fontconfig/lib
       - name: Run Tests
-        run: zef install .
+        run: |
+          export LD_LIBRARY_PATH=/opt/homebrew/opt/fontconfig/lib
+          zef install .
