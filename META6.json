@@ -24,7 +24,7 @@
   "resources": [
     "libraries/fc_raku"
   ],
-  "source-url": "https://github.com/tbrowder/FontConfig-raku.git",
+  "source-url": "https://github.com/pdf-raku/FontConfig-raku.git",
   "tags": [
     "font"
   ],
