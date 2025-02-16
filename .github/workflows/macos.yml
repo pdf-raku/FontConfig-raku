@@ -30,6 +30,6 @@ jobs:
         run: |
           zef install --/test LibraryMake
           zef install --deps-only .
-          zef build .
+          raku Build.pm6 -I /opt/homebrew/opt/freetype/include
       - name: Run Tests
         run: zef install .

@@ -1,5 +1,8 @@
 #| Enums and constants
 unit module FontConfig::Defs;
+
+use MacOS::NativeLib 'freetype';
+
 our $FC-LIB is export(:FC-LIB) = Rakudo::Internals.IS-WIN ?? 'libfontconfig' !! ('fontconfig', v1);
 our $FC-BIND-LIB is export(:FC-BIND-LIB) = %?RESOURCES<libraries/fc_raku>;
 

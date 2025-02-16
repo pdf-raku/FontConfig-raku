@@ -18,7 +18,7 @@ $(TGT) : $(SRC)%O%
 	%LD% %LDSHARED% %LIBS% %LDFLAGS% %LDOUT%$(TGT) $(SRC)%O%
 
 $(SRC)%O% : $(SRC).c $(SRC).h
-	%CC% -I $(DIR) -c %CCSHARED% %CCFLAGS% %CCOUT%$(SRC)%O% $(SRC).c
+	%CC% -I $(DIR) -c %CCSHARED% %CCFLAGS% %CCOUT%$(SRC)%O% $(SRC).c %LIB-CFLAGS% 
 
 test : all
 	@prove6 -I . -j $(TEST_JOBS)
