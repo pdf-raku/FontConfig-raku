@@ -31,9 +31,7 @@ jobs:
           zef install --/test LibraryMake
           zef install --deps-only .
           echo /opt/homebrew
-          find /opt/homebrew/opt/freetype/ -name \*.h
-          echo /usr/local/include
-          find /usr/local/include -name fontconfig\*.h
-          raku Build.pm6 -I /opt/homebrew/opt/freetype/lib
+          find /opt/homebrew/opt/fontconfig/ -name \*.h
+          raku Build.pm6 -I /opt/homebrew/opt/fontconfig/lib
       - name: Run Tests
         run: zef install .
