@@ -1,4 +1,4 @@
-name: test
+name: test macos
 
 on:
   push:
@@ -30,8 +30,7 @@ jobs:
         run: |
           zef install --/test LibraryMake
           zef install --deps-only .
-          raku Build.pm6 -I /opt/homebrew/opt/fontconfig/include -L /opt/homebrew/opt/fontconfig/lib
+          raku Build.pm6
       - name: Run Tests
         run: |
-          export LD_LIBRARY_PATH=/opt/homebrew/opt/fontconfig/lib
           zef install .

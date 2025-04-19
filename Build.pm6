@@ -9,9 +9,21 @@ class Build {
     #| Sets up a C<Makefile> and runs C<make>.  C<$folder> should be
     #| C<"$folder/resources/libraries"> and C<$libname> should be the name of the library
     #| without any prefixes or extensions.
-    sub make(Str $folder, Str $destfolder, IO() :$libname!, Str :$I is copy, Str :$L) {
+    sub make(Str $folder, Str $destfolder, IO() :$libname!,
+             Str :$I is copy,
+             Str :$L is copy) {
         my %vars = LibraryMake::get-vars($destfolder);
-        $I //= '/opt/homebrew/include' if  $*DISTRO.name eq 'macos';
+
+        if $*DISTRO.name eq 'macos' {
+            for </opt/homebrew/include /usr/local/include> {
+                $I //= $_ if .IO.d;
+            }
+        
+            for </opt/homebrew/lib /usr/local/lib> {
+                $L //= $_ if .IO.d;
+            }
+        }
+        
         %vars<LIB_BASE> = $libname;
         %vars<LIB_NAME> = ~ $*VM.platform-library-name($libname);
         %vars<LIB-LDFLAGS> = $L ?? "-L$L" !! '';
