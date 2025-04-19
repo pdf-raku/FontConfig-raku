@@ -1,7 +1,4 @@
-#! /usr/bin/env perl6
-#Note `zef build .` will run this script
-use v6;
-
+#Note `zef build .` will run the Build.build() method
 class Build {
     need LibraryMake;
     # adapted from deprecated Native::Resources
@@ -12,7 +9,6 @@ class Build {
     sub make(Str $folder, Str $destfolder, IO() :$libname!,
              Str :$I is copy,
              Str :$L is copy) {
-        my %vars = LibraryMake::get-vars($destfolder);
 
         if $*DISTRO.name eq 'macos' {
             for </opt/homebrew/include /usr/local/include> {
@@ -24,6 +20,7 @@ class Build {
             }
         }
         
+        my %vars = LibraryMake::get-vars($destfolder);
         %vars<LIB_BASE> = $libname;
         %vars<LIB_NAME> = ~ $*VM.platform-library-name($libname);
         %vars<LIB-LDFLAGS> = $L ?? "-L$L" !! '';
@@ -37,12 +34,11 @@ class Build {
     method build($workdir, Str :$I, Str :$L) {
 
         if Rakudo::Internals.IS-WIN {
+            # DLLs are prebuilt on Windows. See 'build-libraries
+            # job in .github/workflows/test.yml
             note "Using pre-built DLL on Windows";
         }
         else {
-            # DLLs are prebuilt on Windows. See 'build-libraries
-            # job in .github/workflows/test.yml
-
             my $destdir = 'resources/libraries';
             mkdir 'resources';
             mkdir $destdir;
@@ -52,7 +48,7 @@ class Build {
     }
 }
 
-# Build.pm can also be run standalone
+# Build.pm6 can also be run standalone
 sub MAIN(Str $working-directory = '.', Str :$I, Str :$L) {
     Build.new.build($working-directory, :$I, :$L);
 }
