@@ -74,18 +74,10 @@ say 'actual weight: ' ~ $match<weight>;
 say 'font file: ' ~ $match<file>;
 ```
 
-### parse
-
-```raku
-method parse(Str $patt --> FontConfig::Pattern)
-```
-
-Create a new pattern from a parsed FontConfig pattern.
-
 ### match-series
 
 ```raku
-method match(UInt :$best, --> FontConfig::Match::Series)
+method match-serices(UInt :$best, --> FontConfig::Match::Series)
 ```
 
 This method returns a series of [FontConfig::Match](https://pdf-raku.github.io/FontConfig-raku/FontConfig/Match) objects ordered by closest match first.

@@ -92,18 +92,10 @@ The matched object is populated with the actual font properties. The
     =end code
 
 
-=head3 parse
-
-=for code :lang<raku>
-method parse(Str $patt --> FontConfig::Pattern)
-
-Create a new pattern from a parsed FontConfig pattern.
-
-
 =head3 match-series
 
 =for code :lang<raku>
-method match(UInt :$best, --> FontConfig::Match::Series)
+method match-serices(UInt :$best, --> FontConfig::Match::Series)
 
 This method returns a series of L<FontConfig::Match> objects ordered by 
 closest match first.

@@ -3,7 +3,7 @@ Revision history for FontConfig
 {{$NEXT}}
 
 0.1.8  2025-04-20T07:13:23+12:00
-  - Further Build.pm6 fixes for lib and include paths on MaxOS 
+  - Further Build.pm6 fixes for lib and include paths on MacOS
 
 0.1.7  2025-04-20T06:39:33+12:00
    - Fix C include path on MacOS
