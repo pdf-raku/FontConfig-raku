@@ -12,6 +12,8 @@ class FcLangSet   is repr('CPointer') is export {}
 class FcObjectSet is repr('CPointer') is export {
     our sub create(--> FcObjectSet) is native($FC-LIB) is symbol('FcObjectSetCreate') {...}
     method add(Str --> FcBool) is native($FC-LIB) is symbol('FcObjectSetAdd') {...}
+    method !destroy is native($FC-LIB) is symbol('FcObjectSetDestroy') {...};
+    method DESTROY { self!destroy }
 }
 
 #| An FcRange holds an integer or numeric range between two values
@@ -20,7 +22,8 @@ class FcRange     is repr('CPointer') {
     our sub create-integer(int32, int32 --> FcRange) is native($FC-LIB) is symbol('FcRangeCreateInteger') {...}
     method get-double(num64 $min is rw, num64 $max is rw) is native($FC-LIB) is symbol('FcRangeGetDouble') {...}
     method clone( --> FcRange) is native($FC-LIB) is symbol('FcRangeCopy') {...}
-    method destroy is native($FC-LIB) is symbol('FcRangeDestroy') {...}
+    method !destroy is native($FC-LIB) is symbol('FcRangeDestroy') {...}
+    method DESTROY { self!destroy }
     multi method COERCE(Range $_ is raw) {
         .min =~= .min.round && .max =~= .max.round
             ?? create-integer(.min.round, .max.round)
@@ -100,6 +103,8 @@ class FcValue is repr('CStruct') is export is rw {
             }
         );
     }
+    method !destroy is native($FC-LIB) is symbol('FcValueDestroy') {...}
+    method DESTROY { self!destroy }
 }
 
 #| marks the type of a pattern element generated when parsing font names. Applications can add new object types so that font names may contain the new elements.
@@ -171,7 +176,10 @@ class FcConfig is repr('CPointer') is export {
     submethod DESTROY { self!destroy }
 }
 
-our sub init(--> FcBool) is native($FC-LIB) is symbol('FcInit') {...}
-our sub finish() is native($FC-LIB) is symbol('FcFini') {...}
 our sub version(--> int32) is native($FC-LIB) is symbol('FcGetVersion') {...}
 our sub set-config-file(Str --> int32) is native($FC-BIND-LIB) is symbol('fc_raku_set_config_file') {...};
+
+our sub init(--> FcBool) is native($FC-LIB) is symbol('FcInit') {...}
+our sub finish() is native($FC-LIB) is symbol('FcFini') {...}
+
+INIT init();

@@ -182,8 +182,6 @@ multi method FALLBACK(\name, |) {
     die X::Method::NotFound.new( :method(name), :typename(self.^name));
 }
 
-INIT FontConfig::Raw::init();
-
 =begin pod
 
 =head2 Description
