@@ -25,6 +25,7 @@ subtest 'query-ft-face() pattern attributes', {
         :weight(80e0), :width(100e0),
         :index(0),
     ) {
+        todo "exact file matching" if .key eq 'file';
         is-deeply $patt{.key}, .value, "pattern '$_' attribute";
     }
     is-deeply $patt<stylelang><en>, ['Roman'];

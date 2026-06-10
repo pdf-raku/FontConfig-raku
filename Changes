@@ -1,6 +1,8 @@
 Revision history for FontConfig
 
 {{$NEXT}}
+  - Move FcInit() to FontConfig::Raw
+  - TODO fontconfig version dependant file-name checks in t/query-ft-face.t
 
 0.1.8  2025-04-20T07:13:23+12:00
   - Further Build.pm6 fixes for lib and include paths on MacOS
