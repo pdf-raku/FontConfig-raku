@@ -33,4 +33,4 @@ jobs:
           raku Build.pm6
       - name: Run Tests
         run: |
-          zef install .
+          zef --verbose install .
