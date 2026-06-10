@@ -13,7 +13,7 @@ has UInt $.best;
 
 submethod TWEAK(UInt :$limit) {
     with $limit {
-        ## warn ':limit is deprecated, please use :best';
+        warn ':limit is deprecated, please use :best';
         $!best //= $limit;
     }
 }
