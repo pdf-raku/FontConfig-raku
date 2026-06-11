@@ -1,8 +1,12 @@
 Revision history for FontConfig
 
 {{$NEXT}}
+
+0.1.9  2026-06-11T13:55:45+12:00
   - Move FcInit() to FontConfig::Raw
   - TODO fontconfig version dependant file-name checks in t/query-ft-face.t
+  - Disable garbage collection on FcRange native objects to avoid double free valgrind
+    errors.
 
 0.1.8  2025-04-20T07:13:23+12:00
   - Further Build.pm6 fixes for lib and include paths on MacOS
