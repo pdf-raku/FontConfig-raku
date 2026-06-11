@@ -23,7 +23,7 @@ class FcRange     is repr('CPointer') {
     method get-double(num64 $min is rw, num64 $max is rw) is native($FC-LIB) is symbol('FcRangeGetDouble') {...}
     method clone( --> FcRange) is native($FC-LIB) is symbol('FcRangeCopy') {...}
     method !destroy is native($FC-LIB) is symbol('FcRangeDestroy') {...}
-    method DESTROY { self!destroy }
+    method new(|) { fail }
     multi method COERCE(Range $_ is raw) {
         .min =~= .min.round && .max =~= .max.round
             ?? create-integer(.min.round, .max.round)

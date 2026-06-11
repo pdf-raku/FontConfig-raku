@@ -1,6 +1,7 @@
 use Test;
 use FontConfig::Raw;
 use FontConfig::Defs :enums;
+plan 6;
 
 my $weight = FcObjectType::get-object-type('weight');
 is $weight.object, 'weight';
